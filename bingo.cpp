@@ -17,6 +17,9 @@ Ernesto Rodrigo Ramirez Briano*/
 
 
 using namespace std;
+using std::cout;
+
+
 
 void gotoxy(int x, int y);
 void textcolor(int n);
@@ -28,10 +31,10 @@ void menu();
 void submenu();
 char *captura(string texto);
 void llenarhorizontal(int** tablero, int ren, int col);
-void imprimirtablero(int **tablero, int ren, int col);
+void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, char *alias2);
 bool revisartablero(int **tablero, int ren, int col);
 bool contiene(int **tablero, int ren, int col, int num);
-void bingohorizontal( );
+void bingohorizontal(char*, char*);
 void setWindowTitle(string texto);
 int **pedirespacio(int ren, int col);
 void shuffle(int *array, int n);
@@ -39,6 +42,7 @@ void shuffle(int *array, int n);
 
 
 int main(){
+	system("cls");// garantiza una pantalla limpia si se ejecuta desde cmd o PowerShell (evita sobreescritura del buffer anterior)
 	mainmenu(); //Inicio de la presentacion
 	system("cls");
 	options(); //muestra el menu de opciones
@@ -167,24 +171,30 @@ void bingologo(){
 
 void options(){ //Menu de opciones
 	int op, opc;
+	char *alias1, *alias2;
+	bool capturadas = false;
 	do{
-		do{
-			menu(); //Menu 1
-			cin >> op;
-			Beep(370, 200); //Sonido de pulso (Frecuencia en Hz, Tiempo en milisegundos) 370 = F#4/Gb4
-			system("cls");
-		}while (op < 1 || op > 7);
+		
+		menu(); //Menu 1
+		cin >> op;
+		Beep(370, 200); //Sonido de pulso (Frecuencia en Hz, Tiempo en milisegundos) 370 = F#4/Gb4
+		system("cls");
+
 		switch(op){
 			case 1:{
 				system("cls");
-				char *alias1, *alias2;
+				capturadas=true;
 				alias1 = captura("Inserte Alias #1: ");
 				alias2 = captura("Inserte Alias #2: ");
 				break;
 			}
 			case 2:{
-				cout << endl << "FUNCION CORRESPONDIENTE AQUI" << endl;
-				bingohorizontal();
+				if(capturadas==true) {
+					bingohorizontal(alias1,alias2);
+				} else {
+					cout << "Primero captura alias!"<<endl;
+				}
+				
 				system("pause");
 				system("cls");
 				break;
@@ -264,7 +274,6 @@ void options(){ //Menu de opciones
 				break;
 			}
 			case 7: cout << "Fin del programa"; break;
-				
 		}
 	}while (op != 7);
 }
@@ -288,7 +297,6 @@ void menu(){
 	cout << endl << "Salir.............................7";
 	textcolor(15);
 	cout << endl << "Inserte opcion: ";
-	
 }
 
 void submenu(){
@@ -315,14 +323,16 @@ void submenu(){
 }
 
 char *captura(string texto){
-	char *alias = new char[15];
+	char *alias = new char[100];
 	bool band = false;
 	fstream file;
 	char nomarch[30] = "estadisticas.txt";
 	int i;
 	do{
 		cout << texto;
-		cin >> alias;
+		fflush(stdin);
+		cin.getline(alias,100);
+		cin.clear();
 		if (strlen(alias) >= 4 && strlen(alias) <= 12){
 			if (isalpha(alias[0]) != 0){
 				for (i=1; i<strlen(alias); i++){
@@ -331,7 +341,7 @@ char *captura(string texto){
 					}
 					else{
 						textcolor(4);
-						cout << "Algun caracter es invalido: " << alias[i] << endl;
+						cout << "Algun caracter es invalido: '" << alias[i] << "'" << endl;
 						cout << endl;
 						textcolor(15);
 						system("pause");
@@ -379,15 +389,13 @@ char *captura(string texto){
 
 
 
-void bingohorizontal(){
+void bingohorizontal(char* alias1, char*alias2){
 	const int H_REN=3, H_COL=9, H_MAX=100;
 	int **tablero1, **tablero2, *valores1,*valores2;
 	tablero1 = pedirespacio(H_REN,H_COL);
 	valores1 = new int[H_REN*H_COL];
-
 	tablero2 = pedirespacio(H_REN,H_COL);
-	valores2 = new int[H_REN*H_COL];
-	
+	valores2 = new int[H_REN*H_COL];	
 
 	llenarhorizontal(tablero1,H_REN,H_COL);
 	llenarhorizontal(tablero2,H_REN,H_COL);
@@ -400,26 +408,32 @@ void bingohorizontal(){
 	int i1,i2; // contadores para la posición donde se almacenarán los numeros que vayan saliendo en cada tablero
 	i1=i2=0;
 	for(int n=0;n<H_MAX;n++){
+		system("cls");
 		cout << "Salio el numero: " << bombo[n] << endl;
 		cout << endl;
-		cout << "Tablero #1"<<endl;
-		imprimirtablero(tablero1,H_REN,H_COL);
-		cout << endl;
-		cout << "Tablero #2"<<endl;
-		imprimirtablero(tablero2,H_REN,H_COL);
+		
+		mostrar(tablero1,tablero2,H_REN, H_COL,"BINGO HORIZONTAL",alias1,alias2);
+		
 		cout << endl;
 		if(contiene(tablero1, H_REN, H_COL, bombo[n])){
-			cout << bombo[n] << " se encuentra en Tablero #1"<<endl;
+			cout << endl;
+			textcolor(2);
+			cout << bombo[n] << " se encuentra en el tablero de "<<alias1  <<endl;
 			valores1[i1] = bombo[n];
 			i1++;
 		}
 		if(contiene(tablero2, H_REN, H_COL, bombo[n])){
-			cout << bombo[n] << " se encuentra en Tablero #2"<<endl;
+			cout << endl;
+			textcolor(3);
+			cout << bombo[n]<< " se encuentra en el tablero de "<<alias2<<endl;
 			valores2[i2] = bombo[n];
 			i2++;
 		}
+		
 		if(revisartablero(tablero1,H_REN,H_COL)){
-			cout << "Jugador 1 gano!" << endl;
+			cout << endl;
+			textcolor(2);
+			cout << alias1 << " gano!" << endl;			
 			cout << "Todos los numeros que salieron en su carta: "<<endl;
 
 			for(int i=0;i<i1;i++) {
@@ -429,7 +443,9 @@ void bingohorizontal(){
 			break;
 		}
 		if(revisartablero(tablero2,H_REN,H_COL)){
-			cout << "Jugador 2 gano!" << endl;
+			cout << endl;
+			textcolor(6);
+			cout <<  alias2 << " gano!" << endl;
 			cout << "Todos los numeros que salieron en su carta: "<<endl;
 
 			for(int i=0;i<i2;i++) {
@@ -438,8 +454,9 @@ void bingohorizontal(){
 			cout << endl;
 			break;
 		}
-		cout << endl << "+++++++++++++++++++++++++++++++"<<endl;
-		Sleep(500);
+		textcolor(15);
+		/* cout << endl << endl << "+++++++++++++++++++++++++++++++"<<endl; */
+		Sleep(2000);
 	}
 }
 
@@ -472,8 +489,8 @@ bool revisartablero(int **tablero, int ren, int col){
 void llenarhorizontal(int** tablero, int ren, int col){
 	// carta con 4 espacios en blanco por renglon!
 	int *numeros = new int[100];
-	for(int i=1;i<100;i++) {
-		numeros[i] = i;
+	for(int i=0;i<100;i++) {
+		numeros[i] = i+1;
 	}
 	shuffle(numeros, 100);
 	int *aux = new int[col];
@@ -483,7 +500,7 @@ void llenarhorizontal(int** tablero, int ren, int col){
 			aux[j] = 0;
 		}
 		for(int j=0;j<5;j++){
-			aux[j] = numeros[(ultimo*4)+j];
+			aux[j] = numeros[(ultimo*5)+j];
 		}
 		ultimo++;
 		shuffle(aux,col);
@@ -494,18 +511,43 @@ void llenarhorizontal(int** tablero, int ren, int col){
 	}
 }
 
+
+void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, char *alias2){
+    int xt1=5, xt2=60, y=10;
+    gotoxy(20,2);
+    cout << titulo;
+    for(int i=0;i<ren;i++){
+        for(int j=0;j<col;j++){
+			textcolor(2);
+            gotoxy(xt1, 5);
+            cout << alias1;
+            gotoxy((j*4)+(xt1),(i*2)+y);
+            cout << t1[i][j];
+
+			textcolor(3);
+            gotoxy(xt2, 5);
+            cout << alias2;
+            gotoxy((j*4)+(xt2),(i*2)+y);
+            cout << t2[i][j];
+        }
+    }
+}
+/* 
 void imprimirtablero(int **tablero, int ren, int col) {
 	for(int i=0;i<ren;i++){
 		for(int j=0;j<col;j++){
-			cout << setw(4);
-			if(tablero[i][j]==0) 
+			cout << setw(4) << setfill(' ');
+			if(tablero[i][j]==0) {
 				cout << 'X';
-			else 
+			} else {
+				
 				cout << tablero[i][j];
+			}
+								
 		}
 		cout <<endl;
 	}
-}
+} */
 
 
 int **pedirespacio(int ren, int col)
