@@ -13,7 +13,8 @@ Ernesto Rodrigo Ramirez Briano*/
 #include <fstream>
 #include <iomanip>
 #define SLEEPBINGO 200	//Tiempo que se tarda en mostrar la palabra "BINGO!"
-#define WINDOW_TITLE_PREFIX "BINGO!: "
+#define VEL 500 //tiempo de espera en partida
+#define WINDOW_TITLE_PREFIX "BINGO!"
 
 
 using namespace std;
@@ -38,6 +39,8 @@ void bingohorizontal(char*, char*);
 void setWindowTitle(string texto);
 int **pedirespacio(int ren, int col);
 void shuffle(int *array, int n);
+void cartacompleta(char *alias1, char *alias2);
+bool revisarcompleto(int **tablero, int ren, int col);
 
 
 
@@ -120,7 +123,6 @@ void uaalogo(){
 
 void bingologo(){
 /*	
-
 __/\\\\\\\\\\\\\\______/\\\\\\\\\\\____/\\\\\\______/\\\______/\\\\\\\\\\\\\_________/\\\\\________
  _\/\\\//////////\\\___\/////\\\///____\/\\\\\\\_____/\\\____/\\\///////////________/\\\///\\\______
   _\/\\\________\/\\\_______\/\\\_______\/\\\\\\\\___\/\\\___\/\\\_________________/\\\/__\///\\\____
@@ -129,10 +131,8 @@ __/\\\\\\\\\\\\\\______/\\\\\\\\\\\____/\\\\\\______/\\\______/\\\\\\\\\\\\\____
      _\/\\\________\/\\\_______\/\\\_______\/\\\///\/\\\\\\\\___\/\\\________\/\\\__\//\\\______/\\\____
       _\/\\\________\/\\\_______\/\\\_______\/\\\___\//\\\\\\\___\/\\\________\/\\\___\///\\\__/\\\______
        _\/\\\\\\\\\\\\\/______/\\\\\\\\\\\___\/\\\____\//\\\\\\___\//\\\\\\\\\\\\\/______\///\\\\\/_______
-        _\/////////////_______\///////////____\///______\//////_____\/////////////__________\/////_________
-        
+        _\/////////////_______\///////////____\///______\//////_____\/////////////__________\/////_________      
 */
-
 	int x = 30, y = 1;
 	system("color 01");
 	gotoxy(x, y);
@@ -205,7 +205,12 @@ void options(){ //Menu de opciones
 				break;
 			}
 			case 3:{
-				cout << endl << "FUNCION CORRESPONDIENTE AQUI" << endl;
+				if (capturadas == true){
+					cartacompleta(alias1, alias2);
+				}
+				else{
+					cout << "Primero captura alias!" << endl;
+				}
 				system("pause");
 				system("cls");
 				break;
@@ -461,7 +466,7 @@ void bingohorizontal(char* alias1, char*alias2){
 		}
 		textcolor(15);
 		/* cout << endl << endl << "+++++++++++++++++++++++++++++++"<<endl; */
-		Sleep(2000);
+		Sleep(VEL);
 	}
 }
 
@@ -491,29 +496,54 @@ bool revisartablero(int **tablero, int ren, int col){
 	return false;
 }
 
+bool revisarcompleto(int **tablero, int ren, int col){
+	int cont = 0;
+	for(int i=0; i<ren; i++){
+		for(int j=0; j<col; j++){
+			if(tablero[i][j] == 0){
+				cont++;
+			}
+			else{
+				break;
+			}
+		}
+	}
+	if (cont == 27){
+		return true;
+	}
+	return false;
+}
+
 void llenarhorizontal(int** tablero, int ren, int col){
 	// carta con 4 espacios en blanco por renglon!
-	int *numeros = new int[100];
-	for(int i=0;i<100;i++) {
-		numeros[i] = i+1;
+	int *numeros;
+	numeros = new int[100];
+	for (int i=0; i<100; i++){
+		numeros[i] = i + 1;
 	}
 	shuffle(numeros, 100);
-	int *aux = new int[col];
-	int ultimo=0;
-	for(int i=0;i<ren;i++){
-		for(int j=0;j<col;j++){
-			aux[j] = 0;
+	int *aux;
+	aux = new int[9];
+	
+	int inicio = 0;
+	int fin = 5;
+	for (int r=0; r<ren; r++){
+		for(int i=0; i<9; i++){
+			aux[i] = 0;
 		}
-		for(int j=0;j<5;j++){
-			aux[j] = numeros[(ultimo*5)+j];
+		int cont = 0;
+		for (int i=inicio; i<fin; i++){
+			aux[cont] = numeros[i];
+			cont++;
 		}
-		ultimo++;
-		shuffle(aux,col);
-
-		for(int j=0;j<col;j++){
-			tablero[i][j]=aux[j];
+		shuffle(aux, 9);
+		for (int c=0; c<col; c++){
+			tablero[r][c] = aux[c];
 		}
+		inicio = fin;
+		fin += 5;
 	}
+	delete []numeros;
 }
 
 
@@ -537,6 +567,85 @@ void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, 
         }
     }
 }
+
+void cartacompleta(char *alias1, char *alias2){
+	const int RENFULL = 3, COLFULL =9, MAX=100;
+	int **tablero1, **tablero2, *valores1,*valores2;
+	tablero1 = pedirespacio(RENFULL, COLFULL);
+	valores1 = new int[RENFULL * COLFULL];
+	tablero2 = pedirespacio(RENFULL, COLFULL);
+	valores2 = new int[RENFULL * COLFULL];	
+	int sumatoria1, sumatoria2;
+	sumatoria1 = sumatoria2 = 0;
+
+	llenarhorizontal(tablero1,RENFULL, COLFULL); //se manda a llenar con esta funcion porque este modo tambien tiene cuatro espacios por renglon
+	llenarhorizontal(tablero2,RENFULL, COLFULL);
+	
+	int *bolsa = new int [MAX];
+	for (int i=1; i<MAX; i++){
+		bolsa[i] = i;
+	}
+	shuffle(bolsa, MAX);
+	int cont1, cont2;
+	cont1 = cont2 = 0;
+	
+	for(int i=0; i<MAX; i++){
+		system("cls");
+		cout << "Salio el numero: " << bolsa[i] << "				Han salido: " << i + 1  << " numeros" << endl;
+		cout << endl;
+		mostrar(tablero1, tablero2, RENFULL, COLFULL , "BINGO CARTA COMPLETA", alias1, alias2);
+		cout << endl;
+		
+		if(contiene(tablero1, RENFULL, COLFULL, bolsa[i])){
+			cout << endl;
+			textcolor(2);
+			cout << bolsa[i] << " se encuentra en el tablero de "<< alias1 <<endl;
+			valores1[cont1] = bolsa[i];
+			cont1++;
+		}
+		
+		if(contiene(tablero2, RENFULL, COLFULL, bolsa[i])){
+			cout << endl;
+			textcolor(3);
+			cout << bolsa[i] << " se encuentra en el tablero de "<< alias2 << endl;
+			valores2[cont2] = bolsa[i];
+			cont2++;
+		}
+		
+		if(revisarcompleto(tablero1, RENFULL, COLFULL)){
+			cout << endl;
+			textcolor(6);
+			cout << alias1 << " gano!" << endl;			
+			cout << "Todos los numeros que salieron en su carta: "<<endl;
+			for(int j=0; j<cont1; j++){
+				sumatoria1 += valores2[j];
+				cout << valores1[j] << " ";
+			}
+			cout << endl << "Total de puntos: " << sumatoria1;
+			cout << endl;
+			break;
+		}
+		if(revisarcompleto(tablero2, RENFULL, COLFULL)){
+			cout << endl;
+			textcolor(6);
+			cout <<  alias2 << " gano!" << endl;
+			cout << "Todos los numeros que salieron en su carta: "<< endl;
+			for(int j=0; j<cont2; j++){
+				sumatoria2 += valores2[j];
+				cout << valores2[j] << " ";
+			}
+			cout << endl << "Total de puntos: " << sumatoria2;
+			cout << endl;
+			break;
+		}
+		textcolor(15);
+		Sleep(VEL);
+	}
+	system("pause");
+	system("cls");
+	menu();	
+}
+
 /* 
 void imprimirtablero(int **tablero, int ren, int col) {
 	for(int i=0;i<ren;i++){
