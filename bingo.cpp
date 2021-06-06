@@ -16,11 +16,8 @@ Ernesto Rodrigo Ramirez Briano*/
 #define VEL 500 //tiempo de espera en partida
 #define WINDOW_TITLE_PREFIX "BINGO!"
 
-
 using namespace std;
 using std::cout;
-
-
 
 void gotoxy(int x, int y);
 void textcolor(int n);
@@ -45,6 +42,7 @@ bool revisarcompleto(int **tablero, int ren, int col);
 
 
 int main(){
+	srand(time(NULL));
 	system("cls");// garantiza una pantalla limpia si se ejecuta desde cmd o PowerShell (evita sobreescritura del buffer anterior)
 	mainmenu(); //Inicio de la presentacion
 	system("cls");
@@ -591,7 +589,7 @@ void cartacompleta(char *alias1, char *alias2){
 	
 	for(int i=0; i<MAX; i++){
 		system("cls");
-		cout << "Salio el numero: " << bolsa[i] << "				Han salido: " << i + 1  << " numeros" << endl;
+		cout << "Salio el numero: " << bolsa[i] << "								Han salido: " << i + 1  << " numeros" << endl;
 		cout << endl;
 		mostrar(tablero1, tablero2, RENFULL, COLFULL , "BINGO CARTA COMPLETA", alias1, alias2);
 		cout << endl;
@@ -675,7 +673,7 @@ int **pedirespacio(int ren, int col)
 }
  
 
- void shuffle(int *array, int n) {
+ void shuffle(int *array, int n){
 	if(n > 1) {
 		int i;
 		for(i=0;i<n-1;i++){
