@@ -1,9 +1,11 @@
-/*Proyecto Final 2021
+/*
+Proyecto Final 2021
 BINGO!
 Juan Miguel Casillas Romo
 Iker Jimenez Tovar
 Sergio Fernando Marentes Jimenez
-Ernesto Rodrigo Ramirez Briano*/
+Ernesto Rodrigo Ramirez Briano 
+*/
 
 #include <iostream>
 #include <cstdlib>
