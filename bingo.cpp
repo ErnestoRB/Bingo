@@ -42,7 +42,10 @@ int **pedirespacio(int ren, int col);
 void shuffle(int *array, int n);
 void cartacompleta(char *alias1, char *alias2);
 bool revisarcompleto(int **tablero, int ren, int col);
-
+void bingovertical(char* alias1, char*alias2);
+bool revisarvertical(int num, int **m,int ren, int col,int *vec, int &indice);
+bool ganarvertical(int **mat,int ren,int col);
+void llenarvertical(int **matriz, int ren, int col);
 
 
 int main(){
@@ -223,8 +226,14 @@ void options(){ //Menu de opciones
 				system("cls");
 				break;
 			}
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////
 			case 5:{
-				cout << endl << "FUNCION CORRESPONDIENTE AQUI" << endl;
+				if (capturadas == true){
+					bingovertical(alias1, alias2);
+				}
+				else{
+					cout << "Primero captura alias!" << endl;
+				}
 				system("pause");
 				system("cls");
 				break;
@@ -302,7 +311,7 @@ void menu(){
 	textcolor(n+4);
 	cout << endl << "Modo: Una diagonal principal......4";
 	textcolor(n+5);
-	cout << endl << "Modo: <PERSONALIZADO>.............5";
+	cout << endl << "Modo: Vertical....................5";
 	textcolor(n+1);
 	cout << endl << "Estadisticas......................6";
 	textcolor(n+2);
@@ -325,7 +334,7 @@ void submenu(){
 	textcolor(n+5);
 	cout << endl << "Estadisticas modo diagonal.........5";
 	textcolor(n+1);
-	cout << endl << "Estadisticas modo <PERSONALIZADO>..6";
+	cout << endl << "Estadisticas modo vertical.........6";
 	textcolor(n+2);
 	cout << endl << "Maximo ganador por modo............7";
 	textcolor(n+3);
@@ -400,6 +409,148 @@ char *captura(string texto){
 }
 
 
+void llenarvertical(int **matriz, int ren, int col){
+	int *vec;
+	vec=new int[100];
+	for (int i=0; i<100; i++){
+		vec[i]=i+1;
+	}
+	shuffle(vec,100);
+	int *aux;
+	aux= new int[5];
+	int inicio=0;
+	int fin=5;
+	for (int r=0; r<ren; r++){
+		int cont=0;
+		for( int i=inicio; i<fin; i++){
+			aux[cont]=vec[i];
+			cont++;
+		}
+		shuffle(aux,5);
+		for(int c=0; c<col; c++){
+			matriz[r][c]=aux[c];
+		}
+		inicio=fin;
+		fin=fin+5;
+	}
+}
+bool revisarvertical(int num, int **m,int ren, int col,int *vec, int &indice){
+	bool exito=false;
+	int c;
+	c=2;
+	for(int j=0; j<col; j++){
+		for(int i=0; i<ren; i++){
+			if(m[i][c]==num){
+				cout<<endl<<endl<<"El "<<num<<" esta en el tablero. "<<endl;
+				vec[indice]=num;
+				indice++;
+				m[i][c]=0;
+			}
+		}
+	}
+	return false;
+}
+
+bool ganarvertical(int **mat,int ren,int col){
+	bool band=false;
+	int cont;
+	int suma;
+	int c;
+	c=2;
+	for(int j=0; j<col; j++){
+		cont=0;
+		suma=0;
+		for(int i=0; i<ren; i++){
+			if(mat[i][c]==0){
+				suma=suma+mat[i][j];
+				cont++;
+			}
+		}
+		if(cont==5){
+			band=true;
+			break;
+		}
+	}
+	
+	return band;
+}
+
+
+void bingovertical(char* alias1, char*alias2){
+	int **tablero1;
+	int **tablero2;
+	int *val1,*val2;
+	
+	tablero1=pedirespacio(5,5);
+	tablero2=pedirespacio(5,5);
+	
+	llenarvertical(tablero1,5,5);
+	llenarvertical(tablero2,5,5);
+	
+	
+	
+
+	int *bolsa= new int[100];
+	for(int i=0; i<=100; i++){
+		bolsa[i]=i;
+	}
+	shuffle(bolsa,100);
+	
+	bool vertical1= false, vertical2=false;
+	int okv1[100], in1=0;
+	int okv2[100], in2=0;
+	
+	
+	for(int i=0; i<100; i++){
+		system("cls");
+		cout<<endl<<endl<<"Salio el numero: "<<bolsa[i];
+		cout << endl;
+		
+		mostrar(tablero1,tablero2,5, 5,"BINGO VERTICAL",alias1,alias2);
+		
+		
+		if(revisarvertical(bolsa[i],tablero1,5,5,okv1,in1)){
+			cout << endl;
+			textcolor(2);
+			cout << bolsa[i] << " se encuentra en el tablero de "<<alias1  <<endl;
+		}
+		if(revisarvertical(bolsa[i],tablero2,5,5,okv2,in2)){
+			cout << endl;
+			textcolor(3);
+			cout << bolsa[i]<< " se encuentra en el tablero de "<<alias2<<endl;
+		}
+		
+		if(ganarvertical(tablero1,5,5)){
+			cout << endl;
+			textcolor(2);
+			cout << alias1 << " gano!" << endl;			
+			cout << "Todos los numeros que salieron en su carta: "<<endl;
+
+			for(int j=0;j<in1;j++) {
+				cout<<okv1[j]<<" ";
+			}
+			cout << endl;
+			break;
+		}
+		
+		if(ganarvertical(tablero2,5,5)){
+			cout << endl;
+			textcolor(6);
+			cout <<  alias2 << " gano!" << endl;
+			cout << "Todos los numeros que salieron en su carta: "<<endl;
+
+			for(int j=0; j<in2; j++){
+				cout<<okv2[j]<<" ";
+			}
+			cout << endl;
+			break;
+		}
+		textcolor(15);
+		Sleep(VEL);
+	}
+	cout<<endl;
+	
+}
 
 void bingohorizontal(char* alias1, char*alias2){
 	const int H_REN=3, H_COL=9, H_MAX=100;
@@ -417,7 +568,7 @@ void bingohorizontal(char* alias1, char*alias2){
 		bombo[n]=n;
 	}
 	shuffle(bombo, H_MAX);
-	int i1,i2; // contadores para la posiciÃ³n donde se almacenarÃ¡n los numeros que vayan saliendo en cada tablero
+	int i1,i2; // contadores para la posición donde se almacenarán los numeros que vayan saliendo en cada tablero
 	i1=i2=0;
 	for(int n=0;n<H_MAX;n++){
 		system("cls");
@@ -707,5 +858,4 @@ void setWindowTitle(string texto){
 	string s = "title " + texto;
 	system(s.c_str());
 }
-
 
