@@ -32,6 +32,7 @@ struct Estadisticas {
 	char alias[15];
 	MODOS modo;
 	int puntuacion;
+	char fecha[25];
 };
 
 
@@ -45,7 +46,7 @@ void menu();
 void submenu();
 char *captura(string texto);
 void llenarhorizontal(int** tablero, int ren, int col);
-void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, char *alias2);
+void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, char *alias2, int*v1, int tv1,int*v2,int tv2);
 bool revisartablero(int **tablero, int ren, int col);
 bool contiene(int **tablero, int ren, int col, int num);
 void bingohorizontal(char*, char*);
@@ -61,6 +62,7 @@ void llenarvertical(int **matriz, int ren, int col);
 void guardar(Estadisticas stats);
 void mostrarEstadisticas();
 void estadisticasUsuario(string nombre);
+char *obtenerhora();
 
 
 int main(){
@@ -73,6 +75,7 @@ int main(){
 }
 
 void mainmenu(){ //Menu de inicio, se muestran datos del equipo y se incia el juego
+	cout << obtenerhora();
 	setWindowTitle(WINDOW_TITLE_PREFIX);
 	uaalogo(); //Logo UAA
 	gotoxy(12, 10);
@@ -265,7 +268,7 @@ void options(){ //Menu de opciones
 					switch (opc){
 						case 1:{
 							system("cls");
-							cout << endl << "FUNCION CORRESPONDIENTE AQUI" << endl; break;
+							mostrarEstadisticas();
 							system("pause");
 							break;
 						}
@@ -521,7 +524,7 @@ void bingovertical(char* alias1, char*alias2){
 		cout<<endl<<endl<<"Salio el numero: "<<bolsa[i];
 		cout << endl;
 		
-		mostrar(tablero1,tablero2,5, 5,"BINGO VERTICAL",alias1,alias2);
+		mostrar(tablero1,tablero2,5, 5,"BINGO VERTICAL",alias1,alias2,okv1,in1,okv2,in2);
 		
 		
 		if(revisarvertical(bolsa[i],tablero1,5,5,okv1,in1)){
@@ -587,10 +590,10 @@ void bingohorizontal(char* alias1, char*alias2){
 	i1=i2=0;
 	for(int n=0;n<H_MAX;n++){
 		system("cls");
-		cout << "Salio el numero: " << bombo[n] << endl;
+		cout << "Salio el numero: " << bombo[n] << "\t Han salido "<<n<<" numeros"<< endl;
 		cout << endl;
 		
-		mostrar(tablero1,tablero2,H_REN, H_COL,"BINGO HORIZONTAL",alias1,alias2);
+		mostrar(tablero1,tablero2,H_REN, H_COL,"BINGO HORIZONTAL",alias1,alias2,valores1,i1,valores2,i2);
 		
 		cout << endl;
 		if(contiene(tablero1, H_REN, H_COL, bombo[n])){
@@ -633,7 +636,6 @@ void bingohorizontal(char* alias1, char*alias2){
 			break;
 		}
 		textcolor(15);
-		/* cout << endl << endl << "+++++++++++++++++++++++++++++++"<<endl; */
 		Sleep(VEL);
 	}
 }
@@ -715,7 +717,7 @@ void llenarhorizontal(int** tablero, int ren, int col){
 }
 
 
-void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, char *alias2){
+void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, char *alias2, int*v1, int tv1,int*v2,int tv2){
     int xt1=5, xt2=60, y=10;
     gotoxy(20,2);
     cout << titulo;
@@ -724,12 +726,26 @@ void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, 
 			textcolor(2);
             gotoxy(xt1, 5);
             cout << alias1;
+            gotoxy(xt1, 6);
+            cout << "Aciertos: "<<tv1;
+            gotoxy(xt1, 7);
+            cout << "Han salido: ";
+            for(int i=0;i<tv1;i++){
+            	cout << v1[i] <<" ";
+			}
             gotoxy((j*4)+(xt1),(i*2)+y);
             cout << t1[i][j];
 
 			textcolor(3);
             gotoxy(xt2, 5);
             cout << alias2;
+            gotoxy(xt2, 6);
+            cout << "Aciertos: "<<tv2;
+            gotoxy(xt2, 7);
+            cout << "Han salido: ";
+            for(int i=0;i<tv2;i++){
+            	cout << v2[i] <<" ";
+			}
             gotoxy((j*4)+(xt2),(i*2)+y);
             cout << t2[i][j];
         }
@@ -761,7 +777,7 @@ void cartacompleta(char *alias1, char *alias2){
 		system("cls");
 		cout << "Salio el numero: " << bolsa[i] << "								Han salido: " << i + 1  << " numeros" << endl;
 		cout << endl;
-		mostrar(tablero1, tablero2, RENFULL, COLFULL , "BINGO CARTA COMPLETA", alias1, alias2);
+		mostrar(tablero1, tablero2, RENFULL, COLFULL , "BINGO CARTA COMPLETA", alias1, alias2,valores1,cont1,valores2,cont2);
 		cout << endl;
 		
 		if(contiene(tablero1, RENFULL, COLFULL, bolsa[i])){
@@ -874,30 +890,31 @@ void setWindowTitle(string texto){
 	system(s.c_str());
 }
 
-void guardar(Estadisticas stats){
+void guardar(Estadisticas estadistica){
 	fstream fs;
 	fs.open(ARCHIVO,ios::binary|ios::out|ios::app);
 	if(!fs){
 		cout << "No se pudo abrir"<<endl;
 		return;
 	}
-	fs.write((char*)(&stats),sizeof(Estadisticas));
-
+	fs.write((char*)(&estadistica),sizeof(Estadisticas));
 	fs.close();	
 }
 
 void mostrarEstadisticas(){
 	fstream fs;
-	fs.open(ARCHIVO,ios::binary|ios::out|ios::app);
+	fs.open(ARCHIVO,ios::binary|ios::in);
 	if(!fs){
 		cout << "No se pudo abrir"<<endl;
 		return;
 	}
 	Estadisticas aux;
+	cout << setw(20) << "Alias"<<setw(20)<<"Modo"<<setw(16)<<"Puntuacion"<<setw(25)<<"Fecha"<<endl;
 	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
-		cout << aux.alias<<endl;
-		cout << aux.modo<<endl;
-		cout << aux.puntuacion<<endl;
+		cout << setw(20) << aux.alias;
+		cout << setw(20) <<aux.modo;
+		cout << setw(16) << aux.puntuacion;
+		cout << setw(25) <<aux.fecha<<endl;
 	}
 
 	fs.close();
@@ -920,5 +937,40 @@ void estadisticasUsuario(string nombre){
 	}
 
 	fs.close();
+}
+
+void maximosGanadores(){
+	fstream fs;
+	fs.open(ARCHIVO,ios::binary|ios::out|ios::app);
+	if(!fs){
+		cout << "No se pudo abrir"<<endl;
+		return;
+	}
+	Estadisticas aux;
+	int mejorhorizontal=0, mejorcompleta=0, mejordiagonal=0, mejorvertical=0;
+	/*while(fs.read((char*)(&aux),sizeof(Estadisticas))){
+		switch(aux.modo){
+			case HORIZONTAL:
+				if()
+				break;
+			case COMPLETA:
+				break;
+			case DIAGONAL:
+				break;
+			case VERTICAL:
+				break;
+		}
+	}*/
+
+	fs.close();
+}
+
+char *obtenerhora() {
+	char *cadena = new char[25];
+    time_t ahora = time(0);
+	struct tm* localt = localtime(&ahora);
+	strftime(cadena, 25,"%d/%m/%y %X",localt);
+	//strftime(hora, htam,"%X",localt);
+	return cadena;
 }
 
