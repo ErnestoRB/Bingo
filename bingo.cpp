@@ -525,7 +525,7 @@ void bingodiagonal(char* alias1, char*alias2){
 		cout<<endl<<endl<<"Salio el numero: "<<bolsa[i];
 		cout << endl;
 		
-
+		//mostrar(tablero1,tablero2,dim, dim,"BINGO DIAGONAL",alias1,alias2);
 		
 		
 		if(revisardiagonal(bolsa[i],tablero1,dim,dim,okv1,in1)){
