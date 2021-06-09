@@ -19,9 +19,21 @@ Ernesto Rodrigo Ramirez Briano
 #define SLEEPBINGO 200	//Tiempo que se tarda en mostrar la palabra "BINGO!"
 #define VEL 500 //tiempo de espera en partida
 #define WINDOW_TITLE_PREFIX "BINGO!"
+#define ARCHIVO "estadisticas.dat"
 
 using namespace std;
 using std::cout;
+
+enum MODOS {
+	HORIZONTAL=1,COMPLETA,DIAGONAL,VERTICAL
+};
+
+struct Estadisticas {
+	char alias[15];
+	MODOS modo;
+	int puntuacion;
+};
+
 
 void gotoxy(int x, int y);
 void textcolor(int n);
@@ -46,6 +58,9 @@ void bingovertical(char* alias1, char*alias2);
 bool revisarvertical(int num, int **m,int ren, int col,int *vec, int &indice);
 bool ganarvertical(int **mat,int ren,int col);
 void llenarvertical(int **matriz, int ren, int col);
+void guardar(Estadisticas stats);
+void mostrarEstadisticas();
+void estadisticasUsuario(string nombre);
 
 
 int main(){
@@ -347,7 +362,7 @@ char *captura(string texto){
 	char *alias = new char[100];
 	bool band = false;
 	fstream file;
-	char nomarch[30] = "estadisticas.txt";
+	//char nomarch[30] = "estadisticas.txt";
 	int i;
 	do{
 		cout << texto;
@@ -399,12 +414,12 @@ char *captura(string texto){
 		}
 		
 	}while (band == false);
-	if (band == true){	//Guarda los alias en un archivo de texto
+	/*if (band == true){	//Guarda los alias en un archivo de texto
 		file.open(nomarch,ios::out|ios::app); 
 		file << alias;
 		file << endl;
 		file.close();
-	}
+	}*/
 	return alias;
 }
 
@@ -857,5 +872,53 @@ void textcolor(int n){
 void setWindowTitle(string texto){
 	string s = "title " + texto;
 	system(s.c_str());
+}
+
+void guardar(Estadisticas stats){
+	fstream fs;
+	fs.open(ARCHIVO,ios::binary|ios::out|ios::app);
+	if(!fs){
+		cout << "No se pudo abrir"<<endl;
+		return;
+	}
+	fs.write((char*)(&stats),sizeof(Estadisticas));
+
+	fs.close();	
+}
+
+void mostrarEstadisticas(){
+	fstream fs;
+	fs.open(ARCHIVO,ios::binary|ios::out|ios::app);
+	if(!fs){
+		cout << "No se pudo abrir"<<endl;
+		return;
+	}
+	Estadisticas aux;
+	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
+		cout << aux.alias<<endl;
+		cout << aux.modo<<endl;
+		cout << aux.puntuacion<<endl;
+	}
+
+	fs.close();
+}
+
+void estadisticasUsuario(string nombre){
+	fstream fs;
+	fs.open(ARCHIVO,ios::binary|ios::out|ios::app);
+	if(!fs){
+		cout << "No se pudo abrir"<<endl;
+		return;
+	}
+	Estadisticas aux;
+	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
+		if(nombre==aux.alias){
+			cout << aux.alias<<endl;
+			cout << aux.modo<<endl;
+			cout << aux.puntuacion<<endl;
+		}
+	}
+
+	fs.close();
 }
 
