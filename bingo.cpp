@@ -426,8 +426,6 @@ char *captura(string texto){
 }
 
 
-
-
 bool contiene(int **tablero, int ren, int col, int num){
 	for(int i=0;i<ren;i++){
 		for(int j=0;j<col;j++){
