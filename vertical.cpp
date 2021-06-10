@@ -35,7 +35,6 @@ bool revisarvertical(int num, int **m,int ren, int col,int *vec, int &indice){
 	for(int j=0; j<col; j++){
 		for(int i=0; i<ren; i++){
 			if(m[i][c]==num){
-				cout<<endl<<endl<<"El "<<num<<" esta en el tablero. "<<endl;
 				vec[indice]=num;
 				indice++;
 				m[i][c]=0;
@@ -79,11 +78,11 @@ void bingovertical(char* alias1, char*alias2){
 	llenarvertical(tablero1,5,5);
 	llenarvertical(tablero2,5,5);
 		
-
 	int *bolsa= new int[100];
-	for(int i=0; i<=100; i++){
+	for(int i=1; i<=100; i++){
 		bolsa[i]=i;
 	}
+	
 	shuffle(bolsa,100);
 	
 	bool vertical1= false, vertical2=false;
@@ -93,10 +92,11 @@ void bingovertical(char* alias1, char*alias2){
 	
 	for(int i=0; i<100; i++){
 		system("cls");
-		cout<<endl<<endl<<"Salio el numero: "<<bolsa[i];
+		cout<<endl<<endl<<"Salio el numero: "<<bolsa[i]<< "								Han salido: " << i + 1  << " numeros" << endl;
 		cout << endl;
 		
 		mostrar(tablero1,tablero2,5, 5,"BINGO VERTICAL",alias1,alias2,okv1,in1,okv2,in2);
+		
 		
 		if(revisarvertical(bolsa[i],tablero1,5,5,okv1,in1)){
 			cout << endl;
@@ -113,7 +113,7 @@ void bingovertical(char* alias1, char*alias2){
 		
 		if(ganarvertical(tablero1,5,5)){
 			cout << endl;
-			textcolor(2);
+			textcolor(6);
 			cout << alias1 << " gano!" << endl;			
 			cout << "Todos los numeros que salieron en su carta: "<<endl;
 
@@ -121,9 +121,9 @@ void bingovertical(char* alias1, char*alias2){
 				cout<<okv1[j]<<" ";
 				suma1+=okv1[j];
 			}
+			cout<<endl;
+			cout<<endl<<"Total de Puntos: "<<suma1;
 			cout << endl;
-			cout << endl << "Total de puntos: "<<suma1;
-			break;
 		}
 		
 		if(ganarvertical(tablero2,5,5)){
@@ -136,8 +136,9 @@ void bingovertical(char* alias1, char*alias2){
 				cout<<okv2[j]<<" ";
 				suma2+=okv2[j];
 			}
+			cout<<endl;
+			cout<<endl<<"Total de Puntos: "<<suma2;
 			cout << endl;
-			cout << endl << "Total de puntos: "<<suma2;
 			break;
 		}
 		textcolor(15);
