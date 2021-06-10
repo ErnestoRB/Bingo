@@ -606,10 +606,10 @@ bool revisarvertical(int num, int **m,int ren, int col,int *vec, int &indice){
 	for(int j=0; j<col; j++){
 		for(int i=0; i<ren; i++){
 			if(m[i][c]==num){
-				cout<<endl<<endl<<"El "<<num<<" esta en el tablero. "<<endl;
 				vec[indice]=num;
 				indice++;
 				m[i][c]=0;
+				return true;
 			}
 		}
 	}
@@ -619,15 +619,12 @@ bool revisarvertical(int num, int **m,int ren, int col,int *vec, int &indice){
 bool ganarvertical(int **mat,int ren,int col){
 	bool band=false;
 	int cont;
-	int suma;
 	int c;
 	c=2;
 	for(int j=0; j<col; j++){
 		cont=0;
-		suma=0;
 		for(int i=0; i<ren; i++){
 			if(mat[i][c]==0){
-				suma=suma+mat[i][j];
 				cont++;
 			}
 		}
@@ -644,21 +641,19 @@ bool ganarvertical(int **mat,int ren,int col){
 void bingovertical(char* alias1, char*alias2){
 	int **tablero1;
 	int **tablero2;
-	int *val1,*val2;
+	int suma1=0, suma2=0;
 	
 	tablero1=pedirespacio(5,5);
 	tablero2=pedirespacio(5,5);
 	
 	llenarvertical(tablero1,5,5);
 	llenarvertical(tablero2,5,5);
-	
-	
-	
 
 	int *bolsa= new int[100];
-	for(int i=0; i<=100; i++){
+	for(int i=1; i<=100; i++){
 		bolsa[i]=i;
 	}
+	
 	shuffle(bolsa,100);
 	
 	bool vertical1= false, vertical2=false;
@@ -668,7 +663,7 @@ void bingovertical(char* alias1, char*alias2){
 	
 	for(int i=0; i<100; i++){
 		system("cls");
-		cout<<endl<<endl<<"Salio el numero: "<<bolsa[i];
+		cout<<endl<<endl<<"Salio el numero: "<<bolsa[i]<< "								Han salido: " << i + 1  << " numeros" << endl;
 		cout << endl;
 		
 		mostrar(tablero1,tablero2,5, 5,"BINGO VERTICAL",alias1,alias2,okv1,in1,okv2,in2);
@@ -677,11 +672,13 @@ void bingovertical(char* alias1, char*alias2){
 		if(revisarvertical(bolsa[i],tablero1,5,5,okv1,in1)){
 			cout << endl;
 			textcolor(2);
+			cout<<endl;
 			cout << bolsa[i] << " se encuentra en el tablero de "<<alias1  <<endl;
 		}
 		if(revisarvertical(bolsa[i],tablero2,5,5,okv2,in2)){
 			cout << endl;
 			textcolor(3);
+			cout<<endl;
 			cout << bolsa[i]<< " se encuentra en el tablero de "<<alias2<<endl;
 		}
 		
@@ -693,7 +690,10 @@ void bingovertical(char* alias1, char*alias2){
 
 			for(int j=0;j<in1;j++) {
 				cout<<okv1[j]<<" ";
+				suma1+=okv1[j];
 			}
+			cout<<endl;
+			cout<<endl<<"Total de Puntos: "<<suma1;
 			cout << endl;
 			break;
 		}
@@ -706,7 +706,10 @@ void bingovertical(char* alias1, char*alias2){
 
 			for(int j=0; j<in2; j++){
 				cout<<okv2[j]<<" ";
+				suma2+=okv2[j];
 			}
+			cout<<endl;
+			cout<<endl<<"Total de Puntos: "<<suma2;
 			cout << endl;
 			break;
 		}
