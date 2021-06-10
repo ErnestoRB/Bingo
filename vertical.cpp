@@ -39,24 +39,22 @@ bool revisarvertical(int num, int **m,int ren, int col,int *vec, int &indice){
 				vec[indice]=num;
 				indice++;
 				m[i][c]=0;
+				return true;
 			}
 		}
 	}
-	return false;
+	return exito;
 }
 
 bool ganarvertical(int **mat,int ren,int col){
 	bool band=false;
 	int cont;
-	int suma;
 	int c;
 	c=2;
 	for(int j=0; j<col; j++){
 		cont=0;
-		suma=0;
 		for(int i=0; i<ren; i++){
 			if(mat[i][c]==0){
-				suma=suma+mat[i][j];
 				cont++;
 			}
 		}
@@ -73,8 +71,8 @@ bool ganarvertical(int **mat,int ren,int col){
 void bingovertical(char* alias1, char*alias2){
 	int **tablero1;
 	int **tablero2;
-	int *val1,*val2;
-	
+	int suma1=0, suma2=0;
+
 	tablero1=pedirespacio(5,5);
 	tablero2=pedirespacio(5,5);
 	
@@ -103,11 +101,13 @@ void bingovertical(char* alias1, char*alias2){
 		if(revisarvertical(bolsa[i],tablero1,5,5,okv1,in1)){
 			cout << endl;
 			textcolor(2);
+			cout << endl;
 			cout << bolsa[i] << " se encuentra en el tablero de "<<alias1  <<endl;
 		}
 		if(revisarvertical(bolsa[i],tablero2,5,5,okv2,in2)){
 			cout << endl;
 			textcolor(3);
+			cout << endl;
 			cout << bolsa[i]<< " se encuentra en el tablero de "<<alias2<<endl;
 		}
 		
@@ -119,8 +119,10 @@ void bingovertical(char* alias1, char*alias2){
 
 			for(int j=0;j<in1;j++) {
 				cout<<okv1[j]<<" ";
+				suma1+=okv1[j];
 			}
 			cout << endl;
+			cout << endl << "Total de puntos: "<<suma1;
 			break;
 		}
 		
@@ -132,8 +134,10 @@ void bingovertical(char* alias1, char*alias2){
 
 			for(int j=0; j<in2; j++){
 				cout<<okv2[j]<<" ";
+				suma2+=okv2[j];
 			}
 			cout << endl;
+			cout << endl << "Total de puntos: "<<suma2;
 			break;
 		}
 		textcolor(15);
