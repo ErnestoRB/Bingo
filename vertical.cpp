@@ -42,7 +42,7 @@ bool revisarvertical(int num, int **m,int ren, int col,int *vec, int &indice){
 			}
 		}
 	}
-	return exito;
+	return false;
 }
 
 bool ganarvertical(int **mat,int ren,int col){
@@ -124,6 +124,7 @@ void bingovertical(char* alias1, char*alias2){
 			cout<<endl;
 			cout<<endl<<"Total de Puntos: "<<suma1;
 			cout << endl;
+			break;
 		}
 		
 		if(ganarvertical(tablero2,5,5)){
