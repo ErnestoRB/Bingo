@@ -42,7 +42,7 @@ bool revisarvertical(int num, int **m,int ren, int col,int *vec, int &indice){
 			}
 		}
 	}
-	return false;
+	return exito;
 }
 
 bool ganarvertical(int **mat,int ren,int col){
