@@ -256,10 +256,10 @@ void options(){ //Menu de opciones
 				system("cls");
 				break;
 			}
-			case 6: {
-				system("cls");
+			case 6: {	
 				do{
 					do{
+						system("cls");
 						submenu(); //Menu de estadisticas
 						cin >> opc;
 						Beep(370, 200); //Sonido de pulso (Frecuencia en Hz, Tiempo en milisegundos) 370 = F#4/Gb4
@@ -273,7 +273,10 @@ void options(){ //Menu de opciones
 							break;
 						}
 						case 2:{
-							cout << endl << "FUNCION CORRESPONDIENTE AQUI" << endl;
+							string alias;
+							cout << endl << "Que alias quieres buscar?"<<endl;
+							cin >> alias;
+							estadisticasUsuario(alias);
 							system("pause");
 							system("cls");
 							break;
@@ -443,17 +446,17 @@ bool contiene(int **tablero, int ren, int col, int num){
 
 
 void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, char *alias2, int*v1, int tv1,int*v2,int tv2){
-    int xt1=5, xt2=60, y=10;
-    gotoxy(20,2);
+    int xt1=5, xt2=60, y=15;
+    gotoxy(30,5);
     cout << titulo;
     for(int i=0;i<ren;i++){
         for(int j=0;j<col;j++){
 			textcolor(2);
-            gotoxy(xt1, 5);
+            gotoxy(xt1, y/2+1);
             cout << alias1;
-            gotoxy(xt1, 6);
+            gotoxy(xt1, y/2+2);
             cout << "Aciertos: "<<tv1;
-            gotoxy(xt1, 7);
+            gotoxy(xt1, y/2+3);
             cout << "Han salido: ";
             for(int i=0;i<tv1;i++){
             	cout << v1[i] <<" ";
@@ -462,11 +465,11 @@ void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, 
             cout << t1[i][j];
 
 			textcolor(3);
-            gotoxy(xt2, 5);
+            gotoxy(xt2, y/2+1);
             cout << alias2;
-            gotoxy(xt2, 6);
+            gotoxy(xt2, y/2+2);
             cout << "Aciertos: "<<tv2;
-            gotoxy(xt2, 7);
+            gotoxy(xt2, y/2+3);
             cout << "Han salido: ";
             for(int i=0;i<tv2;i++){
             	cout << v2[i] <<" ";
@@ -477,7 +480,23 @@ void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, 
     }
 }
 
-
+string mododejuego(int modo){
+	switch(modo){
+		case HORIZONTAL:
+		return "Horizontal";
+		break;
+		case COMPLETA:
+		return "C. Completa";
+		break;
+		case DIAGONAL:
+		return "Diagonal";
+		break;
+		case VERTICAL:
+		return "Vertical";
+		break;
+	}
+	return "";
+}
 
 
 int **pedirespacio(int ren, int col)

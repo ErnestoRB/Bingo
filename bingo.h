@@ -32,6 +32,7 @@
     void menu();
     void submenu();
     char *captura(string texto);
+    string mododejuego(int modo);
     void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, char *alias2, int*v1, int tv1,int*v2,int tv2);
     void llenarhorizontal(int** tablero, int ren, int col);
     bool revisarhorizontal(int **tablero, int ren, int col);

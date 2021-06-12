@@ -15,6 +15,7 @@ void guardar(Estadisticas estadistica){
 }
 
 void mostrarEstadisticas(){
+	
 	fstream fs;
 	fs.open(ARCHIVO,ios::binary|ios::in);
 	if(!fs){
@@ -22,10 +23,12 @@ void mostrarEstadisticas(){
 		return;
 	}
 	Estadisticas aux;
+	textcolor(2);
 	cout << setw(20) << "Alias"<<setw(20)<<"Modo"<<setw(16)<<"Puntuacion"<<setw(25)<<"Fecha"<<endl;
+	textcolor(15);
 	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
 		cout << setw(20) << aux.alias;
-		cout << setw(20) <<aux.modo;
+		cout << setw(20) << mododejuego(aux.modo);
 		cout << setw(16) << aux.puntuacion;
 		cout << setw(25) <<aux.fecha<<endl;
 	}
@@ -35,18 +38,27 @@ void mostrarEstadisticas(){
 
 void estadisticasUsuario(string nombre){
 	fstream fs;
-	fs.open(ARCHIVO,ios::binary|ios::out|ios::app);
+	fs.open(ARCHIVO,ios::binary|ios::in);
 	if(!fs){
 		cout << "No se pudo abrir"<<endl;
 		return;
 	}
 	Estadisticas aux;
+	bool existe=false;
+	textcolor(2);
+	cout << setw(20) << "Alias"<<setw(20)<<"Modo"<<setw(16)<<"Puntuacion"<<setw(25)<<"Fecha"<<endl;
+	textcolor(15);
 	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
 		if(nombre==aux.alias){
-			cout << aux.alias<<endl;
-			cout << aux.modo<<endl;
-			cout << aux.puntuacion<<endl;
+			cout << setw(20) << aux.alias;
+			cout << setw(20) << mododejuego(aux.modo);
+			cout << setw(16) << aux.puntuacion;
+			cout << setw(25) << aux.fecha<<endl;
+			existe = true;
 		}
+	}
+	if(!existe){
+		cout << "No hay registros de ese alias"<<endl;
 	}
 
 	fs.close();

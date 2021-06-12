@@ -11,13 +11,14 @@ void bingohorizontal(char* alias1, char*alias2){
 	valores1 = new int[H_REN*H_COL];
 	tablero2 = pedirespacio(H_REN,H_COL);
 	valores2 = new int[H_REN*H_COL];	
+	
 
 	llenarhorizontal(tablero1,H_REN,H_COL);
 	llenarhorizontal(tablero2,H_REN,H_COL);
 	
 	int *bombo = new int [H_MAX];
 	for(int n=1;n<H_MAX;n++){
-		bombo[n]=n;
+		bombo[n-1]=n;
 	}
 	shuffle(bombo, H_MAX);
 	int i1,i2; // contadores para la posici�n donde se almacenar�n los numeros que vayan saliendo en cada tablero
@@ -25,6 +26,10 @@ void bingohorizontal(char* alias1, char*alias2){
 	for(int n=0;n<H_MAX;n++){
 		system("cls");
 		cout << "Salio el numero: " << bombo[n] << "\t Han salido "<<n<<" numeros"<< endl;
+		cout << "Han salido los numeros: ";
+		for(int i=0;i<n;i++){
+			cout << bombo[i] << " ";
+		}
 		cout << endl;
 		
 		mostrar(tablero1,tablero2,H_REN, H_COL,"BINGO HORIZONTAL",alias1,alias2,valores1,i1,valores2,i2);
@@ -46,18 +51,32 @@ void bingohorizontal(char* alias1, char*alias2){
 		}
 		
 		if(revisarhorizontal(tablero1,H_REN,H_COL)){
+			int puntuacion=0;
+			
 			cout << endl;
-			textcolor(2);
-			cout << alias1 << " gano!" << endl;			
+			textcolor(6);
+			cout << alias1 << " gano!" << endl;	
 			cout << "Todos los numeros que salieron en su carta: "<<endl;
 
 			for(int i=0;i<i1;i++) {
 				cout << valores1[i] << " ";
+				puntuacion+=valores1[i];
 			}
+			cout << endl << "Puntuacion obtenida: "<<puntuacion<<endl;
+
+			// si jugador gana, crear estadisticas:
+			Estadisticas stat;
+			strcpy(stat.alias,alias1);
+			strcpy(stat.fecha,obtenerhora());
+			stat.modo = HORIZONTAL;
+			stat.puntuacion = puntuacion;
+			guardar(stat);
 			cout << endl;
 			break;
 		}
 		if(revisarhorizontal(tablero2,H_REN,H_COL)){
+			int puntuacion=0;
+
 			cout << endl;
 			textcolor(6);
 			cout <<  alias2 << " gano!" << endl;
@@ -65,7 +84,15 @@ void bingohorizontal(char* alias1, char*alias2){
 
 			for(int i=0;i<i2;i++) {
 				cout << valores2[i] << " ";
+				puntuacion+=valores2[i];
 			}
+			cout << endl << "Puntuacion obtenida: "<<puntuacion<<endl;	
+			Estadisticas stat;
+			strcpy(stat.alias,alias2);
+			strcpy(stat.fecha,obtenerhora());
+			stat.modo = HORIZONTAL;
+			stat.puntuacion = puntuacion;
+			guardar(stat);
 			cout << endl;
 			break;
 		}
