@@ -36,6 +36,115 @@ void mostrarEstadisticas(){
 	fs.close();
 }
 
+void estadisticasHorizontal(){
+	fstream fs;
+	fs.open(ARCHIVO,ios::binary|ios::in);
+	if(!fs){
+		cout << "No se pudo abrir"<<endl;
+		return;
+	}
+	Estadisticas aux;
+	textcolor(2);
+	cout << setw(20) << "Alias"<<setw(20)<<"Modo"<<setw(16)<<"Puntuacion"<<setw(25)<<"Fecha"<<endl;
+	textcolor(15);
+	bool existe=false;
+	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
+		if(aux.modo==HORIZONTAL){
+			cout << setw(20) << aux.alias;
+			cout << setw(20) << mododejuego(aux.modo);
+			cout << setw(16) << aux.puntuacion;
+			cout << setw(25) <<aux.fecha<<endl;
+		}		
+	}
+	if(!existe){
+		cout << endl << "No hay registros! ):" <<endl;
+	}
+
+	fs.close();
+}
+
+void estadisticasCompleta(){
+	fstream fs;
+	fs.open(ARCHIVO,ios::binary|ios::in);
+	if(!fs){
+		cout << "No se pudo abrir"<<endl;
+		return;
+	}
+	Estadisticas aux;
+	textcolor(2);
+	cout << setw(20) << "Alias"<<setw(20)<<"Modo"<<setw(16)<<"Puntuacion"<<setw(25)<<"Fecha"<<endl;
+	textcolor(15);
+	bool existe=false;
+	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
+		if(aux.modo==COMPLETA){
+			cout << setw(20) << aux.alias;
+			cout << setw(20) << mododejuego(aux.modo);
+			cout << setw(16) << aux.puntuacion;
+			cout << setw(25) <<aux.fecha<<endl;
+		}		
+	}
+	if(!existe){
+		cout << endl << "No hay registros! ):" <<endl;
+	}
+
+	fs.close();
+}
+
+void estadisticasDiagonal() {
+	fstream fs;
+	fs.open(ARCHIVO,ios::binary|ios::in);
+	if(!fs){
+		cout << "No se pudo abrir"<<endl;
+		return;
+	}
+	Estadisticas aux;
+	textcolor(2);
+	cout << setw(20) << "Alias"<<setw(20)<<"Modo"<<setw(16)<<"Puntuacion"<<setw(25)<<"Fecha"<<endl;
+	textcolor(15);
+	bool existe=false;
+	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
+		if(aux.modo==DIAGONAL){
+			cout << setw(20) << aux.alias;
+			cout << setw(20) << mododejuego(aux.modo);
+			cout << setw(16) << aux.puntuacion;
+			cout << setw(25) <<aux.fecha<<endl;
+		}		
+	}
+	if(!existe){
+		cout << endl << "No hay registros! ):" <<endl;
+	}
+
+	fs.close();
+}
+
+void estadisticasVertical() {
+	fstream fs;
+	fs.open(ARCHIVO,ios::binary|ios::in);
+	if(!fs){
+		cout << "No se pudo abrir"<<endl;
+		return;
+	}
+	Estadisticas aux;
+	textcolor(2);
+	cout << setw(20) << "Alias"<<setw(20)<<"Modo"<<setw(16)<<"Puntuacion"<<setw(25)<<"Fecha"<<endl;
+	textcolor(15);
+	bool existe=false;
+	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
+		if(aux.modo==VERTICAL){
+			cout << setw(20) << aux.alias;
+			cout << setw(20) << mododejuego(aux.modo);
+			cout << setw(16) << aux.puntuacion;
+			cout << setw(25) <<aux.fecha<<endl;
+		}		
+	}
+	if(!existe){
+		cout << endl << "No hay registros! ):" <<endl;
+	}
+
+	fs.close();
+}
+
+
 void estadisticasUsuario(string nombre){
 	fstream fs;
 	fs.open(ARCHIVO,ios::binary|ios::in);
@@ -66,26 +175,52 @@ void estadisticasUsuario(string nombre){
 
 void maximosGanadores(){
 	fstream fs;
-	fs.open(ARCHIVO,ios::binary|ios::out|ios::app);
+	fs.open(ARCHIVO,ios::binary|ios::in);
 	if(!fs){
 		cout << "No se pudo abrir"<<endl;
 		return;
 	}
 	Estadisticas aux;
 	int mejorhorizontal=0, mejorcompleta=0, mejordiagonal=0, mejorvertical=0;
-	/*while(fs.read((char*)(&aux),sizeof(Estadisticas))){
+	int poshorizontal=0, poscompleta=0, posdiagonal=0, posvertical=0;
+	int n=0;
+	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
 		switch(aux.modo){
 			case HORIZONTAL:
-				if()
+				if(aux.puntuacion>mejorhorizontal){
+					mejorhorizontal=aux.puntuacion;
+					poshorizontal=n;
+				}
 				break;
 			case COMPLETA:
+				if(aux.puntuacion>mejorcompleta){
+					mejorcompleta=aux.puntuacion;
+					poscompleta=n;
+				}
 				break;
 			case DIAGONAL:
+				if(aux.puntuacion>mejordiagonal){
+					mejordiagonal=aux.puntuacion;
+					posdiagonal=n;
+				}
 				break;
 			case VERTICAL:
+			if(aux.puntuacion>mejorvertical){
+					mejorvertical=aux.puntuacion;
+					posvertical=n;
+				}
 				break;
 		}
-	}*/
+		n++;
+	}
+	if(mejorhorizontal>0){
+		fs.seekg(poshorizontal*sizeof(Estadisticas), ios::beg);
+		fs.read((char*)(&aux),sizeof(Estadisticas));
+		cout << setw(20) << aux.alias;
+		cout << setw(20) << mododejuego(aux.modo);
+		cout << setw(16) << aux.puntuacion;
+		cout << setw(25) << aux.fecha<<endl;
+	}
 
 	fs.close();
 }

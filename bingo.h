@@ -21,7 +21,6 @@
         char fecha[25];
     };
 
-
     void shuffle(int *array, int n);
     void gotoxy(int x, int y);
     void textcolor(int n);
@@ -52,6 +51,11 @@
     void guardar(Estadisticas stats);
     void mostrarEstadisticas();
     void estadisticasUsuario(string nombre);
+    void estadisticasHorizontal();
+    void estadisticasCompleta();
+    void estadisticasDiagonal();
+    void estadisticasVertical();
+    void maximosGanadores();
     char *obtenerhora();
     void setWindowTitle(string texto);
 #endif

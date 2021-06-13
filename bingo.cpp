@@ -282,31 +282,31 @@ void options(){ //Menu de opciones
 							break;
 						}
 						case 3:{
-							cout << endl << "FUNCION CORRESPONDIENTE AQUI" << endl;
+							estadisticasHorizontal();
 							system("pause");
 							system("cls");
 							break;
 						}
 						case 4:{
-							cout << endl << "FUNCION CORRESPONDIENTE AQUI" << endl;
+							estadisticasCompleta();
 							system("pause");
 							system("cls");
 							break;
 						}
 						case 5:{
-							cout << endl << "FUNCION CORRESPONDIENTE AQUI" << endl;
+							estadisticasDiagonal();
 							system("pause");
 							system("cls");
 							break;
 						}
 						case 6:{
-							cout << endl << "FUNCION CORRESPONDIENTE AQUI" << endl;
+							estadisticasVertical();
 							system("pause");
 							system("cls");
 							break;
 						}
 						case 7:{
-							cout << endl << "FUNCION CORRESPONDIENTE AQUI" << endl;
+							maximosGanadores();
 							system("pause");
 							system("cls");
 							break;
