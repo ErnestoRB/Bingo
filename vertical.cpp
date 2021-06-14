@@ -124,6 +124,14 @@ void bingovertical(char* alias1, char*alias2){
 			cout<<endl;
 			cout<<endl<<"Total de Puntos: "<<suma1;
 			cout << endl;
+			
+			Estadisticas stat;
+			strcpy(stat.alias,alias1);
+			strcpy(stat.fecha,obtenerhora());
+			stat.modo = VERTICAL;
+			stat.puntuacion = suma1;
+			guardar(stat);
+			cout << endl;
 			break;
 		}
 		
@@ -139,6 +147,14 @@ void bingovertical(char* alias1, char*alias2){
 			}
 			cout<<endl;
 			cout<<endl<<"Total de Puntos: "<<suma2;
+			cout << endl;
+			
+			Estadisticas stat;
+			strcpy(stat.alias,alias2);
+			strcpy(stat.fecha,obtenerhora());
+			stat.modo = VERTICAL;
+			stat.puntuacion = suma2;
+			guardar(stat);
 			cout << endl;
 			break;
 		}
