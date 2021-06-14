@@ -58,4 +58,5 @@
     void maximosGanadores();
     char *obtenerhora();
     void setWindowTitle(string texto);
+    void fontcolor(int foreground, int background);
 #endif

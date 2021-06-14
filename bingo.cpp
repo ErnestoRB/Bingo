@@ -29,31 +29,57 @@ int main(){
 void mainmenu(){ //Menu de inicio, se muestran datos del equipo y se incia el juego
 	cout << obtenerhora();
 	setWindowTitle(WINDOW_TITLE_PREFIX);
+	fontcolor(13,13);
+	for(int lines=0;lines<40;lines++){
+		for(int cols=0;cols<120;cols++){
+
+			if(lines==1 || lines==38){
+				gotoxy(cols,lines);
+				cout << " ";
+			}
+			if(cols==1 || cols==118){
+				gotoxy(cols,lines);
+				cout << " ";
+			}
+		}
+	}
+	textcolor(15);
+	/* for(int lines=0;lines<40;lines++){
+		fontcolor(7,7);
+		gotoxy(0,lines);
+		cout << " ";
+		fontcolor(14,14);
+		gotoxy(118,lines);
+		cout << " ";
+	} */
+
+	
+	int x=30, y=15;
 	uaalogo(); //Logo UAA
-	gotoxy(12, 10);
+	gotoxy(x, y+1);
 	cout << "UNIVERSIDAD AUTONOMA DE AGUASCALIENTES" << endl;
-	gotoxy(20, 11);
+	gotoxy(x, y+2);
 	cout << "ISC              2B";
-	gotoxy(27, 12);
+	gotoxy(x, y+3);
 	cout << "BINGO!";
-	gotoxy(14, 13);
+	gotoxy(x, y+4);
 	cout << "Profesora: Georgina Salazar Partida";
-	gotoxy(25, 15);
+	gotoxy(x, y+5);
 	cout << "INTEGRANTES";
 	textcolor(4);
-	gotoxy(14, 17);
+	gotoxy(x, y+6);
 	cout << "Ernesto Rodrigo Ramirez Briano";
-	gotoxy(14, 18);
+	gotoxy(x, y+7);
 	textcolor(1);
 	cout << "Iker Jimenez Tovar";
-	gotoxy(14, 19);
+	gotoxy(x, y+8);
 	textcolor(14);
 	cout << "Sergio Fernando Marentes Jimenez";
-	gotoxy(14, 20);
+	gotoxy(x, y+9);
 	textcolor(10);
 	cout << "Juan Miguel Casillas Romo";
 	textcolor(15);
-	gotoxy(14, 22);
+	gotoxy(x, y+15);
 	system("pause");
 	system("cls");
 	bingologo(); //Palabra "BINGO!"
@@ -72,7 +98,7 @@ void uaalogo(){
  	 ****   ****    ***
   	  **********    ***
 */
-	int x = 21, y = 0;
+	int x = 35, y = 4;
 	gotoxy(x, y+1);
 	textcolor(1);
 	cout << "*"; textcolor(7); cout << "**     *****"; textcolor(1); cout << "***** " << endl;
@@ -108,47 +134,62 @@ __/\\\\\\\\\\\\\\______/\\\\\\\\\\\____/\\\\\\______/\\\______/\\\\\\\\\\\\\____
        _\/\\\\\\\\\\\\\/______/\\\\\\\\\\\___\/\\\____\//\\\\\\___\//\\\\\\\\\\\\\/______\///\\\\\/_______
         _\/////////////_______\///////////____\///______\//////_____\/////////////__________\/////_________      
 */
-	int x = 0, y = 1;
-	system("color 01");
+	fontcolor(14,14);
+	for(int lines=0;lines<40;lines++){
+		for(int cols=0;cols<120;cols++){
+
+			if(lines==1 || lines==38){
+				gotoxy(cols,lines);
+				cout << " ";
+			}
+			if(cols==1 || cols==118){
+				gotoxy(cols,lines);
+				cout << " ";
+			}
+		}
+	}
+
+	int x = 2, y = 5;
+	textcolor(1);
 	gotoxy(x, y);
 	cout << R"(__/\\\\\\\\\\\\\\______/\\\\\\\\\\\____/\\\\\\______/\\\______/\\\\\\\\\\\\\_________/\\\\\________)";
 	Sleep(SLEEPBINGO);
 	gotoxy(x, y+1);
-	system("color 02");
+	textcolor(2);
 	cout << R"( _\/\\\//////////\\\___\/////\\\///____\/\\\\\\\_____/\\\____/\\\///////////________/\\\///\\\______)";
 	Sleep(SLEEPBINGO);
 	gotoxy(x, y+2);
-	system("color 03");
+	textcolor(3);
 	cout << R"(  _\/\\\________\/\\\_______\/\\\_______\/\\\\\\\\___\/\\\___\/\\\_________________/\\\/__\///\\\____)";
 	Sleep(SLEEPBINGO);
 	gotoxy(x, y+3);
-	system("color 04");
+	textcolor(4);
 	cout << R"(   _\/\\\\\\\\\\\\\\/________\/\\\_______\/\\\\\\\\\__\/\\\___\/\\\_____/\\\\\\\___/\\\______\//\\\___)";
 	Sleep(SLEEPBINGO);
 	gotoxy(x, y+4);
-	system("color 05");
+	textcolor(5);
 	cout << R"(    _\/\\\/////////\\_________\/\\\_______\/\\\\\\\\\\\\\\\\___\/\\\____\/////\\\__\/\\\_______\/\\\___)";
 	Sleep(SLEEPBINGO);
 	gotoxy(x, y+5);
-	system("color 06");
+	textcolor(6);
 	cout << R"(      _\/\\\/////////\\_________\/\\\_______\/\\\\\\\\\\\\\\\\___\/\\\____\/////\\\__\/\\\_______\/\\\___)";
 	Sleep(SLEEPBINGO);
 	gotoxy(x, y+6);
-	system("color 07");
+	textcolor(7);
 	cout << R"(       _\/\\\________\/\\\_______\/\\\_______\/\\\///\/\\\\\\\\___\/\\\________\/\\\__\//\\\______/\\\____)";
 	Sleep(SLEEPBINGO);
 	gotoxy(x, y+7);
-	system("color 08");
+	textcolor(8);
 	cout << R"(        _\/\\\\\\\\\\\\\/______/\\\\\\\\\\\___\/\\\____\//\\\\\\___\//\\\\\\\\\\\\\/______\///\\\\\/_______)";
-	system("color 09");
+	textcolor(9);
 	gotoxy(x, y+8);
 	cout << R"(         _\/////////////_______\///////////____\///______\//////_____\/////////////__________\/////_________)";
-	system("color 0D");
+	textcolor(10);
 	Sleep(SLEEPBINGO);
-	gotoxy(20, 10);
+	gotoxy(35, 25);
 	textcolor(15);
 	cout << "Version 1.0						    ISC 2B";
-	gotoxy(20, 11);
+	gotoxy(20, 25);
 	system("pause");
 
 	/*int x = 30, y = 1;
@@ -321,53 +362,101 @@ void options(){ //Menu de opciones
 }
 
 void menu(){
+	fontcolor(4,4);
+	for(int lines=0;lines<40;lines++){
+		for(int cols=0;cols<120;cols++){
+
+			if(lines==1 || lines==38){
+				gotoxy(cols,lines);
+				cout << " ";
+			}
+			if(cols==1 || cols==118){
+				gotoxy(cols,lines);
+				cout << " ";
+			}
+		}
+	}
 	int n = 1;
+	gotoxy(5,8);
+	textcolor(10);
 	cout << "Bingo!";
 	textcolor(n+1);
-	cout << endl << "Ingresar alias....................1";
+	gotoxy(5,11);
+	cout <<  "Ingresar alias....................1";
 	textcolor(n+2);
-	cout << endl << "Modo: Una linea horizontal........2";
+	gotoxy(5,12);
+	cout <<  "Modo: Una linea horizontal........2";
 	textcolor(n+3);
-	cout << endl << "Modo: Toda la carta...............3";
+	gotoxy(5,13);
+	cout <<  "Modo: Toda la carta...............3";
 	textcolor(n+4);
-	cout << endl << "Modo: Una diagonal principal......4";
+	gotoxy(5,14);
+	cout <<  "Modo: Una diagonal principal......4";
 	textcolor(n+5);
-	cout << endl << "Modo: Vertical....................5";
+	gotoxy(5,15);
+	cout << "Modo: Vertical....................5";
 	textcolor(n+1);
-	cout << endl << "Estadisticas......................6";
+	gotoxy(5,16);
+	cout <<  "Estadisticas......................6";
 	textcolor(n+2);
-	cout << endl << "Salir.............................7";
+	gotoxy(5,17);
+	cout << "Salir.............................7";
 	textcolor(15);
-	cout << endl << "Inserte opcion: ";
+	gotoxy(5,20);
+	cout << "Inserte opcion: ";
 }
 
 void submenu(){
+	fontcolor(9,9);
+	for(int lines=0;lines<40;lines++){
+		for(int cols=0;cols<120;cols++){
+
+			if(lines==1 || lines==38){
+				gotoxy(cols,lines);
+				cout << " ";
+			}
+			if(cols==1 || cols==118){
+				gotoxy(cols,lines);
+				cout << " ";
+			}
+		}
+	}
 	int n = 1;
+	gotoxy(5,8);
+	fontcolor(0,15);
 	cout << "Estadisticas";
 	textcolor(n+1);
-	cout << endl << "Estadisticas registradas...........1";
+	gotoxy(5,11);
+	cout << "Estadisticas registradas...........1";
 	textcolor(n+2);
-	cout << endl << "Estadisticas por jugador...........2";
+	gotoxy(5,12);
+	cout << "Estadisticas por jugador...........2";
 	textcolor(n+3);
-	cout << endl << "Estadisticas modo horizontal.......3";
+	gotoxy(5,13);
+	cout << "Estadisticas modo horizontal.......3";
 	textcolor(n+4);
-	cout << endl << "Estadisticas modo carta completa...4";
+	gotoxy(5,14);
+	cout << "Estadisticas modo carta completa...4";
 	textcolor(n+5);
-	cout << endl << "Estadisticas modo diagonal.........5";
+	gotoxy(5,15);
+	cout << "Estadisticas modo diagonal.........5";
 	textcolor(n+1);
-	cout << endl << "Estadisticas modo vertical.........6";
+	gotoxy(5,16);
+	cout << "Estadisticas modo vertical.........6";
 	textcolor(n+2);
-	cout << endl << "Maximo ganador por modo............7";
+	gotoxy(5,17);
+	cout << "Maximo ganador por modo............7";
 	textcolor(n+3);
-	cout << endl << "Volver.............................8";
-	textcolor(15);
-	cout << endl << "Inserte opcion: ";
+	gotoxy(5,18);
+	cout << "Volver.............................8";
+	textcolor(1);
+	gotoxy(5,19);
+	cout << "Inserte opcion: ";
 }
 
 char *captura(string texto){
 	char *alias = new char[100];
 	bool band = false;
-	//char nomarch[30] = "estadisticas.txt";
 	int i;
 	do{
 		cout << texto;
@@ -419,12 +508,6 @@ char *captura(string texto){
 		}
 		
 	}while (band == false);
-	/*if (band == true){	//Guarda los alias en un archivo de texto
-		file.open(nomarch,ios::out|ios::app); 
-		file << alias;
-		file << endl;
-		file.close();
-	}*/
 	return alias;
 }
 
@@ -462,7 +545,14 @@ void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, 
             	cout << v1[i] <<" ";
 			}
             gotoxy((j*4)+(xt1),(i*2)+y);
-            cout << t1[i][j];
+			if(t1[i][j]==0){
+				fontcolor(15,4);
+				cout << "X"<<endl;
+			} else {
+				textcolor(15);
+				cout << t1[i][j];
+			}
+           
 
 			textcolor(3);
             gotoxy(xt2, y/2+1);
@@ -475,9 +565,16 @@ void mostrar(int **t1, int **t2, int ren, int col, string titulo, char *alias1, 
             	cout << v2[i] <<" ";
 			}
             gotoxy((j*4)+(xt2),(i*2)+y);
-            cout << t2[i][j];
+            if(t2[i][j]==0){
+				fontcolor(15,4);
+				cout << "X"<<endl;
+			} else {	
+				textcolor(15);			
+				cout << t2[i][j];
+			}
         }
     }
+	textcolor(14);
 }
 
 string mododejuego(int modo){
