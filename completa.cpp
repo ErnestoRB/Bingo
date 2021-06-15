@@ -54,10 +54,17 @@ void cartacompleta(char *alias1, char *alias2){
 			cout << alias1 << " gano!" << endl;			
 			cout << "Todos los numeros que salieron en su carta: "<<endl;
 			for(int j=0; j<cont1; j++){
-				sumatoria1 += valores2[j];
+				sumatoria1 += valores1[j];
 				cout << valores1[j] << " ";
 			}
 			cout << endl << "Total de puntos: " << sumatoria1;
+			cout << endl;
+			Estadisticas stat;
+			strcpy(stat.alias,alias1);
+			strcpy(stat.fecha,obtenerhora());
+			stat.modo = COMPLETA;
+			stat.puntuacion = sumatoria1;
+			guardar(stat);
 			cout << endl;
 			break;
 		}
@@ -71,6 +78,13 @@ void cartacompleta(char *alias1, char *alias2){
 				cout << valores2[j] << " ";
 			}
 			cout << endl << "Total de puntos: " << sumatoria2;
+			cout << endl;
+			Estadisticas stat;
+			strcpy(stat.alias,alias2);
+			strcpy(stat.fecha,obtenerhora());
+			stat.modo = COMPLETA;
+			stat.puntuacion = sumatoria2;
+			guardar(stat);
 			cout << endl;
 			break;
 		}
