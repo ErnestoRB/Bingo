@@ -75,6 +75,7 @@ void bingodiagonal(char* alias1, char*alias2){
 	int **tablero2;
 	int *val1,*val2;
 	int dim;
+	int suma1=0, suma2=0;
 	dim = 3 + rand()%(6-3+1);
 	
 	tablero1=pedirespacio(dim,dim);
@@ -99,7 +100,7 @@ void bingodiagonal(char* alias1, char*alias2){
 	
 	for(int i=0; i<99; i++){
 		system("cls");
-		cout<<endl<<endl<<"Salio el numero: "<<bolsa[i];
+		cout<<endl<<endl<<"Salio el numero: "<<bolsa[i]<< "								Han salido: " << i + 1  << " numeros" << endl;
 		cout << endl;
 		
 		mostrar(tablero1,tablero2,dim, dim,"BINGO DIAGONAL",alias1,alias2, okv1,in1,okv2,in2);
@@ -124,7 +125,18 @@ void bingodiagonal(char* alias1, char*alias2){
 
 			for(int j=0;j<in1;j++) {
 				cout<<okv1[j]<<" ";
+				suma1+=okv1[j];
 			}
+				cout<<endl;
+			cout<<endl<<"Total de Puntos: "<<suma1;
+			cout << endl;
+			
+			Estadisticas stat;
+			strcpy(stat.alias,alias1);
+			strcpy(stat.fecha,obtenerhora());
+			stat.modo = DIAGONAL;
+			stat.puntuacion = suma1;
+			guardar(stat);
 			cout << endl;
 			break;
 		}
@@ -137,7 +149,17 @@ void bingodiagonal(char* alias1, char*alias2){
 
 			for(int j=0; j<in2; j++){
 				cout<<okv2[j]<<" ";
+				suma2+=okv2[j];
 			}
+			cout<<endl<<"Total de Puntos: "<<suma2;
+			cout << endl;
+			
+			Estadisticas stat;
+			strcpy(stat.alias,alias2);
+			strcpy(stat.fecha,obtenerhora());
+			stat.modo = DIAGONAL;
+			stat.puntuacion = suma2;
+			guardar(stat);
 			cout << endl;
 			break;
 		}
