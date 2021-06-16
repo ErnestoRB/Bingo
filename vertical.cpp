@@ -112,6 +112,9 @@ void bingovertical(char* alias1, char*alias2){
 		}
 		
 		if(ganarvertical(tablero1,5,5)){
+			Beep(523, 200);
+			Beep(587, 400);
+			Beep(659, 800);
 			cout << endl;
 			textcolor(6);
 			cout << alias1 << " gano!" << endl;			
@@ -136,6 +139,9 @@ void bingovertical(char* alias1, char*alias2){
 		}
 		
 		if(ganarvertical(tablero2,5,5)){
+			Beep(523, 200);
+			Beep(587, 400);
+			Beep(659, 800);
 			cout << endl;
 			textcolor(6);
 			cout <<  alias2 << " gano!" << endl;
