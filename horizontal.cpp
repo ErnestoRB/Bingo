@@ -51,6 +51,9 @@ void bingohorizontal(char* alias1, char*alias2){
 		}
 		
 		if(revisarhorizontal(tablero1,H_REN,H_COL)){
+			Beep(523, 200);
+			Beep(587, 400);
+			Beep(659, 800);
 			int puntuacion=0;
 			
 			cout << endl;
@@ -75,6 +78,9 @@ void bingohorizontal(char* alias1, char*alias2){
 			break;
 		}
 		if(revisarhorizontal(tablero2,H_REN,H_COL)){
+			Beep(523, 200);
+			Beep(587, 400);
+			Beep(659, 800);
 			int puntuacion=0;
 
 			cout << endl;
