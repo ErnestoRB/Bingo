@@ -119,3 +119,4 @@ bool revisarcompleto(int **tablero, int ren, int col){
 	}
 	return false;
 }
+
