@@ -27,7 +27,7 @@ int main(){
 }
 
 void mainmenu(){ //Menu de inicio, se muestran datos del equipo y se incia el juego
-	cout << obtenerhora();
+	
 	setWindowTitle(WINDOW_TITLE_PREFIX);
 	fontcolor(13,13);
 	for(int lines=0;lines<40;lines++){
@@ -44,42 +44,39 @@ void mainmenu(){ //Menu de inicio, se muestran datos del equipo y se incia el ju
 		}
 	}
 	textcolor(15);
-	/* for(int lines=0;lines<40;lines++){
-		fontcolor(7,7);
-		gotoxy(0,lines);
-		cout << " ";
-		fontcolor(14,14);
-		gotoxy(118,lines);
-		cout << " ";
-	} */
 
 	
 	int x=30, y=15;
 	uaalogo(); //Logo UAA
 	gotoxy(x, y+1);
-	cout << "UNIVERSIDAD AUTONOMA DE AGUASCALIENTES" << endl;
+	textcolor(1);
+	cout << "UNIVERSIDAD AUTONOMA DE AGUASCALIENTES";textcolor(15);
 	gotoxy(x, y+2);
-	cout << "ISC              2B";
+	cout << "Ingenieria en Sistemas Computacionales		2B";
 	gotoxy(x, y+3);
-	cout << "BINGO!";
+		cout << "Nombre del proyecto: ";fontcolor(15,4); cout << "BINGO!"; textcolor(15);
 	gotoxy(x, y+4);
 	cout << "Profesora: Georgina Salazar Partida";
-	gotoxy(x, y+5);
+	gotoxy(x, y+6);
+	cout << "Materia: Programacion I (en C)";
+	gotoxy(x, y+8);
 	cout << "INTEGRANTES";
 	textcolor(4);
-	gotoxy(x, y+6);
+	gotoxy(x, y+9);
 	cout << "Ernesto Rodrigo Ramirez Briano";
-	gotoxy(x, y+7);
+	gotoxy(x, y+10);
 	textcolor(1);
 	cout << "Iker Jimenez Tovar";
-	gotoxy(x, y+8);
+	gotoxy(x, y+11);
 	textcolor(14);
 	cout << "Sergio Fernando Marentes Jimenez";
-	gotoxy(x, y+9);
+	gotoxy(x, y+12);
 	textcolor(10);
 	cout << "Juan Miguel Casillas Romo";
 	textcolor(15);
-	gotoxy(x, y+15);
+	gotoxy(x,y+15); cout << "Fecha: "<< obtenerhora();
+	gotoxy(x, y+20);
+	
 	system("pause");
 	system("cls");
 	bingologo(); //Palabra "BINGO!"

@@ -11,6 +11,7 @@ void guardar(Estadisticas estadistica){
 		return;
 	}
 	fs.write((char*)(&estadistica),sizeof(Estadisticas));
+	cout << endl << "Se guardo estadistica del jugador "<< estadistica.alias<<endl;
 	fs.close();	
 }
 
@@ -209,7 +210,7 @@ void maximosGanadores(){
 				}
 				break;
 			case VERTICAL:
-			if(aux.puntuacion>mejorvertical){
+				if(aux.puntuacion>mejorvertical){
 					mejorvertical=aux.puntuacion;
 					posvertical=n;
 				}
@@ -217,56 +218,68 @@ void maximosGanadores(){
 		}
 		n++;
 	}
+	
+	
 	fontcolor(0,4);
-	cout << setw(20) << "Alias"<<setw(20)<<"Modo"<<setw(16)<<"Puntuacion"<<setw(25)<<"Fecha"<<endl;
-	textcolor(0);
+	cout << setw(20) << "Alias"<<setw(20)<<"Modo"<<setw(16)<<"Puntuacion"<<setw(25)<<"Fecha"<<endl<<endl <<endl;
+	fontcolor(15,1);
+	fs.close();
+	fs.open(ARCHIVO,ios::binary|ios::in);
 	if(mejorhorizontal>0){
-		fs.seekg(poshorizontal*sizeof(Estadisticas), ios::beg); // salta a la posición en bytes desde el inicio
+		fs.seekg(poshorizontal*sizeof(Estadisticas)); // salta a la posición en bytes desde el inicio
 		fs.read((char*)(&aux),sizeof(Estadisticas)); // lee datos
 		cout << setw(20) << aux.alias;
 		cout << setw(20) << mododejuego(aux.modo);
 		cout << setw(16) << aux.puntuacion;
-		cout << setw(25) << aux.fecha<<endl;
+		cout << setw(25) << aux.fecha<<endl<<endl;
 	} else {
 		textcolor(4);
 		cout << "No hay registros para modo de juego " << mododejuego(HORIZONTAL)<<endl;
 	}
-	textcolor(0);
+	fontcolor(15,2);
+/* 	fs.close();
+	fs.open(ARCHIVO,ios::binary|ios::in); */
 	if(mejorcompleta>0){
-		fs.seekg(poshorizontal*sizeof(Estadisticas), ios::beg); // salta a la posición en bytes desde el inicio
+		fs.seekg(poscompleta*sizeof(Estadisticas)); // salta a la posición en bytes desde el inicio
 		fs.read((char*)(&aux),sizeof(Estadisticas)); // lee datos
 		cout << setw(20) << aux.alias;
 		cout << setw(20) << mododejuego(aux.modo);
 		cout << setw(16) << aux.puntuacion;
-		cout << setw(25) << aux.fecha<<endl;
+		cout << setw(25) << aux.fecha<<endl<<endl;
 	} else {
 		textcolor(4);
 		cout << "No hay registros para modo de juego " << mododejuego(COMPLETA)<<endl;
 	} 
-	textcolor(0);
+	fontcolor(15,3);
+/* 	fs.close();
+	fs.open(ARCHIVO,ios::binary|ios::in); */
 	if(mejordiagonal>0){
-		fs.seekg(poshorizontal*sizeof(Estadisticas), ios::beg); // salta a la posición en bytes desde el inicio
+		fs.seekg(posdiagonal*sizeof(Estadisticas)); // salta a la posición en bytes desde el inicio
 		fs.read((char*)(&aux),sizeof(Estadisticas)); // lee datos
 		cout << setw(20) << aux.alias;
 		cout << setw(20) << mododejuego(aux.modo);
 		cout << setw(16) << aux.puntuacion;
-		cout << setw(25) << aux.fecha<<endl;
+		cout << setw(25) << aux.fecha<<endl<<endl;
 	} else {
 		textcolor(4);
 		cout << "No hay registros para modo de juego " << mododejuego(DIAGONAL)<<endl;
 	}
-	textcolor(0);
+	fontcolor(15,5);
+/* 	fs.close();
+	fs.open(ARCHIVO,ios::binary|ios::in); */
 	if(mejorvertical>0){
-		fs.seekg(poshorizontal*sizeof(Estadisticas), ios::beg); // salta a la posición en bytes desde el inicio
+		fs.seekg(posvertical*sizeof(Estadisticas)); // salta a la posición en bytes desde el inicio
 		fs.read((char*)(&aux),sizeof(Estadisticas)); // lee datos
 		cout << setw(20) << aux.alias;
 		cout << setw(20) << mododejuego(aux.modo);
 		cout << setw(16) << aux.puntuacion;
-		cout << setw(25) << aux.fecha<<endl;
+		cout << setw(25) << aux.fecha<<endl<<endl;
 	} else {
 		textcolor(4);
 		cout << "No hay registros para modo de juego " << mododejuego(VERTICAL)<<endl;
 	}
-
+	
 	fs.close();
+	gotoxy(0,25);
+	textcolor(15);
 }

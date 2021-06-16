@@ -18,8 +18,8 @@ void cartacompleta(char *alias1, char *alias2){
 	llenarhorizontal(tablero2,RENFULL, COLFULL);
 	
 	int *bolsa = new int [MAX];
-	for (int i=1; i<MAX; i++){
-		bolsa[i] = i;
+	for (int i=0; i<MAX; i++){
+		bolsa[i] = i+1;
 	}
 	shuffle(bolsa, MAX);
 	int cont1, cont2;
@@ -29,6 +29,10 @@ void cartacompleta(char *alias1, char *alias2){
 		system("cls");
 		cout << "Salio el numero: " << bolsa[i] << "								Han salido: " << i + 1  << " numeros" << endl;
 		cout << endl;
+		cout << "Han salido los numeros: ";
+		for(int j=0;j<i;j++){
+			cout << bolsa[j] << " ";
+		}
 		mostrar(tablero1, tablero2, RENFULL, COLFULL , "BINGO CARTA COMPLETA", alias1, alias2,valores1,cont1,valores2,cont2);
 		cout << endl;
 		

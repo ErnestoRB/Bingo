@@ -4,7 +4,7 @@
     #include <cstring>
     #include <iomanip>
     #define SLEEPBINGO 200	//Tiempo que se tarda en mostrar la palabra "BINGO!"
-    #define VEL 500 //tiempo de espera en partida
+    #define VEL 20 //tiempo de espera en partida
     #define WINDOW_TITLE_PREFIX "BINGO!"
     #define ARCHIVO "estadisticas.dat"
 

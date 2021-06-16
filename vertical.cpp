@@ -92,8 +92,11 @@ void bingovertical(char* alias1, char*alias2){
 	
 	for(int i=0; i<100; i++){
 		system("cls");
-		cout<<endl<<endl<<"Salio el numero: "<<bolsa[i]<< "								Han salido: " << i + 1  << " numeros" << endl;
-		cout << endl;
+		cout<<"Salio el numero: "<<bolsa[i]<< "								Han salido: " << i + 1  << " numeros" << endl;
+		cout << "Han salido los numeros: ";
+		for(int j=0;j<i;j++){
+			cout << bolsa[j] << " ";
+		}
 		
 		mostrar(tablero1,tablero2,5, 5,"BINGO VERTICAL",alias1,alias2,okv1,in1,okv2,in2);
 		

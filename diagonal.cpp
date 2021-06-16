@@ -34,7 +34,7 @@ bool revisardiagonal(int num, int **m,int ren, int col,int *vec, int &indice){
 	for(int j=0; j<col; j++){
 		for(int i=0; i<ren; i++){
 			if(m[i][i]==num){
-				cout<<endl<<endl<<"El "<<num<<" esta en el tablero. "<<endl;
+				//cout<<endl<<endl<<"El "<<num<<" esta en el tablero. "<<endl;
 				vec[indice]=num;
 				indice++;
 				m[i][i]=0;
@@ -83,9 +83,7 @@ void bingodiagonal(char* alias1, char*alias2){
 	
 	llenardiagonal(tablero1,dim,dim);
 	llenardiagonal(tablero2,dim,dim);
-	
-	
-	
+		
 
 	int *bolsa= new int[100];
 	for(int i=0; i<99; i++){
@@ -100,8 +98,12 @@ void bingodiagonal(char* alias1, char*alias2){
 	
 	for(int i=0; i<99; i++){
 		system("cls");
-		cout<<endl<<endl<<"Salio el numero: "<<bolsa[i]<< "								Han salido: " << i + 1  << " numeros" << endl;
-		cout << endl;
+		gotoxy(0,0);
+		cout<<"Salio el numero: "<<bolsa[i]<< "								Han salido: " << i + 1  << " numeros" << endl;
+		cout << "Han salido los numeros: ";
+		for(int j=0;j<i;j++){
+			cout << bolsa[j] << " ";
+		}
 		
 		mostrar(tablero1,tablero2,dim, dim,"BINGO DIAGONAL",alias1,alias2, okv1,in1,okv2,in2);
 		
