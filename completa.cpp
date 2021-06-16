@@ -49,6 +49,9 @@ void cartacompleta(char *alias1, char *alias2){
 		}
 		
 		if(revisarcompleto(tablero1, RENFULL, COLFULL)){
+			Beep(523, 200);
+			Beep(587, 400);
+			Beep(659, 800);
 			cout << endl;
 			textcolor(6);
 			cout << alias1 << " gano!" << endl;			
@@ -69,6 +72,9 @@ void cartacompleta(char *alias1, char *alias2){
 			break;
 		}
 		if(revisarcompleto(tablero2, RENFULL, COLFULL)){
+			Beep(523, 200);
+			Beep(587, 400);
+			Beep(659, 800);
 			cout << endl;
 			textcolor(6);
 			cout <<  alias2 << " gano!" << endl;
