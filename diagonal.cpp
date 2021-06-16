@@ -120,6 +120,9 @@ void bingodiagonal(char* alias1, char*alias2){
 		}
 		
 		if(ganardiagonal(tablero1,dim,dim)){
+			Beep(523, 200);
+			Beep(587, 400);
+			Beep(659, 800);
 			cout << endl;
 			textcolor(2);
 			cout << alias1 << " gano!" << endl;			
@@ -144,6 +147,9 @@ void bingodiagonal(char* alias1, char*alias2){
 		}
 		
 		if(ganardiagonal(tablero2,dim,dim)){
+			Beep(523, 200);
+			Beep(587, 400);
+			Beep(659, 800);
 			cout << endl;
 			textcolor(6);
 			cout <<  alias2 << " gano!" << endl;
