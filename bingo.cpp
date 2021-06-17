@@ -200,46 +200,7 @@ __/\\\\\\\\\\\\\\______/\\\\\\\\\\\____/\\\\\\______/\\\______/\\\\\\\\\\\\\____
 	gotoxy(20, 25);
 	system("pause");
 
-	/*int x = 30, y = 1;
-	system("color 01");
-	gotoxy(x, y);
-	cout << "//////   /  //      /   ///////   /////////  //";
-	Sleep(SLEEPBINGO);
-	gotoxy(x, y+1);
-	system("color 02");
-	cout << "******   *  **      *   *******   *********  **";
-	Sleep(SLEEPBINGO);
-	gotoxy(x, y+2);
-	system("color 03");
-	cout << "*     *  *  * *     *  *      *   *       *  **";
-	Sleep(SLEEPBINGO);
-	gotoxy(x, y+3);
-	system("color 04");
-	cout << "*     *  *  *  *    *  *          *       *  **";
-	Sleep(SLEEPBINGO);
-	gotoxy(x, y+4);
-	system("color 05");
-	cout << "******   *  *   *   *  *          *       *  **";
-	Sleep(SLEEPBINGO);
-	gotoxy(x, y+5);
-	system("color 06");
-	cout << "*     *  *  *    *  *  *    ****  *       *  **";
-	Sleep(SLEEPBINGO);
-	gotoxy(x, y+6);
-	system("color 07");
-	cout << "*     *  *  *     * *  *       *  *       *  ";
-	Sleep(SLEEPBINGO);
-	gotoxy(x, y+7);
-	system("color 09");
-	cout << "******   *  *      **   *******   *********  **";
-	system("color 0D");
-	Sleep(SLEEPBINGO);
-	gotoxy(20, 10);
-	textcolor(15);
-	cout << "Version 1.0						    ISC 2B";
-	gotoxy(20, 11);
-	system("pause");*/
-}
+	}
 
 void options(){ //Menu de opciones
 	int op, opc;
