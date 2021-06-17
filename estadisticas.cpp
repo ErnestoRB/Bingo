@@ -186,38 +186,63 @@ void maximosGanadores(){
 		return;
 	}
 	Estadisticas aux;
-/* 	string nombresdistintos[100];
-	int veces[100];
-	int n_nombres=0;
-	int nhor, ncom, ndiag, nvert;
-	nhor=ncom=ndiag=nvert=0;
+	struct Ganador {
+		string nombre;
+		int veces=0;
+		MODOS modo;
+	} distintos[100];
+	int distintos_cont=0;
 	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
-		
-		for(int i=0;i<=n_nombres;i++){
-			if(aux.alias!=nombresdistintos[i]){
-				nombresdistintos[n_nombres] = aux.alias;
-				n_nombres++;
+		bool encontrado=false;
+		for(int i=0;i<=distintos_cont;i++){ // recorre el registro de distintos para ver si se repite el nombre
+			if(aux.alias==distintos[i].nombre && aux.modo == distintos[i].modo){
+				distintos[i].veces++;
+				encontrado = true;
 			}
 		}
-	}
-	fs.close();
-	fs.open(ARCHIVO,ios::binary|ios::in);
-	for(int i=0;i<=n_nombres;i++){
-		while(fs.read((char*)(&aux),sizeof(Estadisticas))){
-			if(aux.alias!=nombresdistintos[i]){
-				nombresdistintos[n_nombres] = aux.alias;
-				n_nombres++;
-			}		
+		if(!encontrado){ // si no esta repetido entonces es distinto a los demas y se debe registrar
+			distintos[distintos_cont].nombre = aux.alias;
+			distintos[distintos_cont].veces++;
+			distintos[distintos_cont].modo = aux.modo;
+			distintos_cont++;
 		}
+
 	}
-	
 
 
- */
 	int mejorhorizontal=0, mejorcompleta=0, mejordiagonal=0, mejorvertical=0;
 	int poshorizontal=0, poscompleta=0, posdiagonal=0, posvertical=0;
 	int n=0;
-	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
+	for(int i=0;i<=distintos_cont;i++){
+		switch(distintos[i].modo){
+			case HORIZONTAL:
+				if(distintos[i].veces>mejorhorizontal){
+					mejorhorizontal=distintos[i].veces;
+					poshorizontal=i;
+				}
+				break;
+			case COMPLETA:
+				if(distintos[i].veces>mejorcompleta){
+					mejorcompleta=distintos[i].veces;
+					poscompleta=i;
+				}
+				break;
+			case DIAGONAL:
+				if(distintos[i].veces>mejordiagonal){
+					mejordiagonal=distintos[i].veces;
+					posdiagonal=i;
+				}
+				break;
+			case VERTICAL:
+				if(distintos[i].veces>mejorvertical){
+					mejorvertical=distintos[i].veces;
+					posvertical=i;
+				}
+				break;
+		}
+	}
+
+	/* while(fs.read((char*)(&aux),sizeof(Estadisticas))){
 		switch(aux.modo){
 			case HORIZONTAL:
 				if(aux.puntuacion>mejorhorizontal){
@@ -245,63 +270,35 @@ void maximosGanadores(){
 				break;
 		}
 		n++;
-	}
+	} */
 	
 	
 	fontcolor(0,4);
-	cout << setw(20) << "Alias"<<setw(20)<<"Modo"<<setw(16)<<"Puntuacion"<<setw(25)<<"Fecha"<<endl<<endl <<endl;
+	cout << setw(20) << "Alias"<<setw(20)<<"Modo"<<setw(16)<<"Veces Ganadas"<<endl <<endl;
 	fontcolor(15,1);
-	fs.close();
-	fs.open(ARCHIVO,ios::binary|ios::in);
 	if(mejorhorizontal>0){
-		fs.seekg(poshorizontal*sizeof(Estadisticas)); // salta a la posición en bytes desde el inicio
-		fs.read((char*)(&aux),sizeof(Estadisticas)); // lee datos
-		cout << setw(20) << aux.alias;
-		cout << setw(20) << mododejuego(aux.modo);
-		cout << setw(16) << aux.puntuacion;
-		cout << setw(25) << aux.fecha<<endl<<endl;
+		cout << setw(20) << distintos[poshorizontal].nombre << setw(20)<<mododejuego(distintos[poshorizontal].modo)<<setw(16)<<distintos[poshorizontal].veces<<endl;
 	} else {
 		textcolor(4);
 		cout << "No hay registros para modo de juego " << mododejuego(HORIZONTAL)<<endl;
 	}
 	fontcolor(15,2);
-/* 	fs.close();
-	fs.open(ARCHIVO,ios::binary|ios::in); */
 	if(mejorcompleta>0){
-		fs.seekg(poscompleta*sizeof(Estadisticas)); // salta a la posición en bytes desde el inicio
-		fs.read((char*)(&aux),sizeof(Estadisticas)); // lee datos
-		cout << setw(20) << aux.alias;
-		cout << setw(20) << mododejuego(aux.modo);
-		cout << setw(16) << aux.puntuacion;
-		cout << setw(25) << aux.fecha<<endl<<endl;
+		cout << setw(20) << distintos[poscompleta].nombre << setw(20)<<mododejuego(distintos[poscompleta].modo)<<setw(16)<<distintos[poscompleta].veces<<endl;
 	} else {
 		textcolor(4);
 		cout << "No hay registros para modo de juego " << mododejuego(COMPLETA)<<endl;
 	} 
 	fontcolor(15,3);
-/* 	fs.close();
-	fs.open(ARCHIVO,ios::binary|ios::in); */
 	if(mejordiagonal>0){
-		fs.seekg(posdiagonal*sizeof(Estadisticas)); // salta a la posición en bytes desde el inicio
-		fs.read((char*)(&aux),sizeof(Estadisticas)); // lee datos
-		cout << setw(20) << aux.alias;
-		cout << setw(20) << mododejuego(aux.modo);
-		cout << setw(16) << aux.puntuacion;
-		cout << setw(25) << aux.fecha<<endl<<endl;
+		cout << setw(20) << distintos[posdiagonal].nombre << setw(20)<<mododejuego(distintos[posdiagonal].modo)<<setw(16)<<distintos[posdiagonal].veces<<endl;
 	} else {
 		textcolor(4);
 		cout << "No hay registros para modo de juego " << mododejuego(DIAGONAL)<<endl;
 	}
 	fontcolor(15,5);
-/* 	fs.close();
-	fs.open(ARCHIVO,ios::binary|ios::in); */
 	if(mejorvertical>0){
-		fs.seekg(posvertical*sizeof(Estadisticas)); // salta a la posición en bytes desde el inicio
-		fs.read((char*)(&aux),sizeof(Estadisticas)); // lee datos
-		cout << setw(20) << aux.alias;
-		cout << setw(20) << mododejuego(aux.modo);
-		cout << setw(16) << aux.puntuacion;
-		cout << setw(25) << aux.fecha<<endl<<endl;
+		cout << setw(20) << distintos[posvertical].nombre << setw(20)<<mododejuego(distintos[posvertical].modo)<<setw(16)<<distintos[posvertical].veces<<endl;
 	} else {
 		textcolor(4);
 		cout << "No hay registros para modo de juego " << mododejuego(VERTICAL)<<endl;
