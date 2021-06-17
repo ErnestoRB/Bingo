@@ -4,7 +4,7 @@
     #include <cstring>
     #include <iomanip>
     #define SLEEPBINGO 200	//Tiempo que se tarda en mostrar la palabra "BINGO!"
-    #define VEL 20 //tiempo de espera en partida
+    #define VEL 200 //tiempo de espera en partida
     #define WINDOW_TITLE_PREFIX "BINGO!"
     #define ARCHIVO "estadisticas.dat"
 
@@ -41,8 +41,8 @@
     void cartacompleta(char *alias1, char *alias2);
     bool revisarcompleto(int **tablero, int ren, int col);
     void bingodiagonal(char* alias1, char*alias2);
-    bool revisardiagonal(int num, int **m,int ren, int col,int *vec, int &indice);
-    bool ganardiagonal(int **mat,int ren,int col);
+    bool revisardiagonal(int num, int **m,int dim,int *vec, int &indice);
+    bool ganardiagonal(int**mat, int dim);
     void llenardiagonal(int **matriz, int ren, int col);
     void bingovertical(char* alias1, char*alias2);
     bool revisarvertical(int num, int **m,int ren, int col,int *vec, int &indice);
