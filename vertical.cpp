@@ -80,7 +80,7 @@ void bingovertical(char* alias1, char*alias2){
 		
 	int *bolsa= new int[100];
 	for(int i=1; i<=100; i++){
-		bolsa[i]=i;
+		bolsa[i-1]=i;
 	}
 	
 	shuffle(bolsa,100);

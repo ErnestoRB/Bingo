@@ -186,6 +186,34 @@ void maximosGanadores(){
 		return;
 	}
 	Estadisticas aux;
+/* 	string nombresdistintos[100];
+	int veces[100];
+	int n_nombres=0;
+	int nhor, ncom, ndiag, nvert;
+	nhor=ncom=ndiag=nvert=0;
+	while(fs.read((char*)(&aux),sizeof(Estadisticas))){
+		
+		for(int i=0;i<=n_nombres;i++){
+			if(aux.alias!=nombresdistintos[i]){
+				nombresdistintos[n_nombres] = aux.alias;
+				n_nombres++;
+			}
+		}
+	}
+	fs.close();
+	fs.open(ARCHIVO,ios::binary|ios::in);
+	for(int i=0;i<=n_nombres;i++){
+		while(fs.read((char*)(&aux),sizeof(Estadisticas))){
+			if(aux.alias!=nombresdistintos[i]){
+				nombresdistintos[n_nombres] = aux.alias;
+				n_nombres++;
+			}		
+		}
+	}
+	
+
+
+ */
 	int mejorhorizontal=0, mejorcompleta=0, mejordiagonal=0, mejorvertical=0;
 	int poshorizontal=0, poscompleta=0, posdiagonal=0, posvertical=0;
 	int n=0;
